@@ -7,17 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36FD6FA8-0F8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6B3DA030-70FD-4BBF-A330-6038109A8DE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{25CA591A-03CA-47B1-813B-57EFBD881096}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{25CA591A-03CA-47B1-813B-57EFBD881096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{605EE575-7550-444D-888E-B4FFFDD91ABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{605EE575-7550-444D-888E-B4FFFDD91ABA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{3C621ED6-1670-4B0A-ABEA-A28B2F6DE402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "src\Web\Web.csproj", "{3C621ED6-1670-4B0A-ABEA-A28B2F6DE402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{014962E5-CFC7-4C2B-9A5F-D71EAA6F7A3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{014962E5-CFC7-4C2B-9A5F-D71EAA6F7A3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "tests\IntegrationTests\IntegrationTests.csproj", "{93379B3C-6847-4398-90CF-88D90501FFFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "tests\IntegrationTests\IntegrationTests.csproj", "{93379B3C-6847-4398-90CF-88D90501FFFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "tests\FunctionalTests\FunctionalTests.csproj", "{204954E0-6E29-49C1-9284-889818F1EE88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests", "tests\FunctionalTests\FunctionalTests.csproj", "{204954E0-6E29-49C1-9284-889818F1EE88}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "src\Database\Database.sqlproj", "{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,12 @@ Global
 		{204954E0-6E29-49C1-9284-889818F1EE88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{204954E0-6E29-49C1-9284-889818F1EE88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{204954E0-6E29-49C1-9284-889818F1EE88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +68,7 @@ Global
 		{014962E5-CFC7-4C2B-9A5F-D71EAA6F7A3C} = {6B3DA030-70FD-4BBF-A330-6038109A8DE9}
 		{93379B3C-6847-4398-90CF-88D90501FFFA} = {6B3DA030-70FD-4BBF-A330-6038109A8DE9}
 		{204954E0-6E29-49C1-9284-889818F1EE88} = {6B3DA030-70FD-4BBF-A330-6038109A8DE9}
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261} = {36FD6FA8-0F8F-4D39-BFC5-FF7C6F2B2DB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {678CD743-4226-416D-8B69-69A23FE2EAA1}
