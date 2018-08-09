@@ -1,14 +1,22 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Infrastructure.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Web
 {
     public class Startup
     {
+        private IServiceCollection services;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,14 +27,46 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
+            // Add Identity DbContext
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+              .AddEntityFrameworkStores<AppIdentityDbContext>()
+              .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                options.LoginPath = "/Account/Signin";
+                options.LogoutPath = "/Account/Signout";
+                options.Cookie = new CookieBuilder
+                {
+                    IsEssential = true
+                };
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMemoryCache();
+
+
+            var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+
+            services.AddMvc(config => config.Filters.Add(new AuthorizeFilter(requireAuthenticatedUserPolicy))).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            this.services = services;
+        }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            ConfigureServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +84,7 @@ namespace Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
