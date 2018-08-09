@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Web.TagHelpers
@@ -12,24 +13,19 @@ namespace Web.TagHelpers
     {
         private IDictionary<string, string> _routeValues;
 
-        /// <summary>The name of the action method.</summary>
-        /// <remarks>Must be <c>null</c> if <see cref="P:Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper.Route" /> is non-<c>null</c>.</remarks>
         [HtmlAttributeName("asp-action")]
         public string Action { get; set; }
 
-        /// <summary>The name of the controller.</summary>
-        /// <remarks>Must be <c>null</c> if <see cref="P:Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper.Route" /> is non-<c>null</c>.</remarks>
         [HtmlAttributeName("asp-controller")]
         public string Controller { get; set; }
 
-        /// <summary>Additional parameters for the route.</summary>
         [HtmlAttributeName("asp-all-route-data", DictionaryAttributePrefix = "asp-route-")]
         public IDictionary<string, string> RouteValues
         {
             get
             {
                 if (this._routeValues == null)
-                    this._routeValues = (IDictionary<string, string>)new Dictionary<string, string>((IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase);
+                    this._routeValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 return this._routeValues;
             }
             set
@@ -38,9 +34,6 @@ namespace Web.TagHelpers
             }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref="T:Microsoft.AspNetCore.Mvc.Rendering.ViewContext" /> for the current request.
-        /// </summary>
         [HtmlAttributeNotBound]
         [ViewContext]
         public ViewContext ViewContext { get; set; }
@@ -62,12 +55,12 @@ namespace Web.TagHelpers
             string currentController = ViewContext.RouteData.Values["Controller"].ToString();
             string currentAction = ViewContext.RouteData.Values["Action"].ToString();
 
-            if (!string.IsNullOrWhiteSpace(Controller) && Controller.ToLower() != currentController.ToLower())
+            if (!string.IsNullOrWhiteSpace(Controller) && Controller.ToLower(CultureInfo.CurrentUICulture) != currentController.ToLower(CultureInfo.CurrentUICulture))
             {
                 return false;
             }
 
-            if (!string.IsNullOrWhiteSpace(Action) && Action.ToLower() != currentAction.ToLower())
+            if (!string.IsNullOrWhiteSpace(Action) && Action.ToLower(CultureInfo.CurrentUICulture) != currentAction.ToLower(CultureInfo.CurrentUICulture))
             {
                 return false;
             }
@@ -84,7 +77,7 @@ namespace Web.TagHelpers
             return true;
         }
 
-        private void MakeActive(TagHelperOutput output)
+        private static void MakeActive(TagHelperOutput output)
         {
             var classAttr = output.Attributes.FirstOrDefault(a => a.Name == "class");
             if (classAttr == null)
@@ -92,7 +85,7 @@ namespace Web.TagHelpers
                 classAttr = new TagHelperAttribute("class", "active");
                 output.Attributes.Add(classAttr);
             }
-            else if (classAttr.Value == null || classAttr.Value.ToString().IndexOf("active") < 0)
+            else if (classAttr.Value == null || classAttr.Value.ToString().IndexOf("active", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 output.Attributes.SetAttribute("class", classAttr.Value == null
                     ? "active"

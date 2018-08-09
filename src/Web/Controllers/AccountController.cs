@@ -27,7 +27,7 @@ namespace Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SignIn(string returnUrl = null)
         {
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme).ConfigureAwait(false);
 
             ViewData["ReturnUrl"] = returnUrl;
 
@@ -47,7 +47,7 @@ namespace Web.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
 
-            var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false).ConfigureAwait(false);
 
             if (result.Succeeded)
             {
@@ -62,7 +62,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SignOut()
         {
-            await this.signInManager.SignOutAsync();
+            await signInManager.SignOutAsync().ConfigureAwait(false);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
@@ -81,10 +81,10 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await this.userManager.CreateAsync(user, model.Password);
+                var result = await userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
                 if (result.Succeeded)
                 {
-                    await this.signInManager.SignInAsync(user, isPersistent: false);
+                    await signInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
@@ -101,12 +101,12 @@ namespace Web.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var user = await this.userManager.FindByIdAsync(userId);
+            var user = await userManager.FindByIdAsync(userId).ConfigureAwait(false);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
-            var result = await this.userManager.ConfirmEmailAsync(user, code);
+            var result = await userManager.ConfirmEmailAsync(user, code).ConfigureAwait(false);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
