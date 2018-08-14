@@ -31,10 +31,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li is-active-route asp-controller="Home" asp-action="Index"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li is-active-route asp-controller="Lot" asp-action="Search"><a asp-controller="Lot" asp-action="Search">Search</a></li>
-                    <li is-active-route asp-controller="Home" asp-action="About"><a asp-controller="Home" asp-action="About">About</a></li>
-                    <li is-active-route asp-controller="Home" asp-action="Contact"><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li is-active-route asp-controller="Home" asp-action="Index"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li is-active-route asp-controller="Lot" asp-action="Search"><a asp-controller="Lot" asp-action="Search">Search</a></li>
+                        <li is-active-route asp-controller="Home" asp-action="About"><a asp-controller="Home" asp-action="About">About</a></li>
+                        <li is-active-route asp-controller="Home" asp-action="Contact"><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    }
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
