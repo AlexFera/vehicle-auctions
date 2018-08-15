@@ -9,5 +9,7 @@
         public string City { get; set; }
 
         public string StateOrProvince { get; set; }
+
+        public Country Country { get; set; }
     }
 }

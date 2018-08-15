@@ -1,9 +1,9 @@
-﻿using Core.Entities.SaleAggregate;
+﻿using Core.Entities;
+using Core.Entities.SaleAggregate;
 using Core.Interfaces;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -22,7 +22,16 @@ namespace Infrastructure.Data
         {
             using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
             {
-                return await sqlConnection.QueryAsync<Sale>("Sale_List", commandType: CommandType.StoredProcedure);
+                sqlConnection.Open();
+
+                return await sqlConnection.QueryAsync<Sale, Seller, Location, Country, Sale>("Sale_List",
+                    map: (sale, seller, location, country) =>
+                    {
+                        sale.Seller = seller;
+                        sale.Location = location;
+                        sale.Location.Country = country;
+                        return sale;
+                    });
             }
         }
     }
