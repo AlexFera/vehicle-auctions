@@ -47,7 +47,11 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Location] AS Target
 USING (
-	VALUES (0,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 0)
+	VALUES (0,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 0),
+	(1,N'Tamworth Rd', N'DE12 7DY', N'Measham', N'Swadlincote', 5),
+	(2,N'Floßhafenstraße 5', N'41460', N'Neuss', N'Neuss', 4),
+	(3,N'Calle Oporto, 2', N'41430', N'La Luisiana', N'Sevilla', 1),
+	(4,N'Prince William Ave', N'CH5 2QZ', N'Sandycroft', N'Chester', 5)
 	) AS Source(LocationId, StreetAddress, PostalCode, City, StateOrProvince, CountryId)
 	ON Target.LocationId = Source.LocationId
 WHEN MATCHED
