@@ -42,7 +42,7 @@ USING (
 		(2,N'Italy','it'),
 		(3,N'France','fr'),
 		(4,N'Germany','it'),
-		(5,N'United Kingdom','uk'),
+		(5,N'United Kingdom','gb'),
 		(6,N'Portugal','pt'),
 		(7,N'Netherlands','nl')
 	) AS Source(Id, Name, Code)
@@ -136,7 +136,8 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Sale] AS Target
 USING (
-	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 14:57:44.390', '2018-10-14 14:57:44.390', 0, 0, 1)
+	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 14:57:44.390', '2018-10-14 14:57:44.390', 0, 0, 1),
+		(1,N'A large vehicle sale', '2018-08-18 15:00:00.000', '2018-10-20 15:00:00.000', 0, 1, 2)
 	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
