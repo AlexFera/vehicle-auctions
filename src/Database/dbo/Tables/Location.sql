@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Location] (
-    [LocationId]      INT          IDENTITY (1, 1) NOT NULL,
+    [LocationId]      INT NOT NULL,
     [StreetAddress]   VARCHAR (50) NOT NULL,
     [PostalCode]      VARCHAR (50) NOT NULL,
     [StateOrProvince] VARCHAR (50) NOT NULL,

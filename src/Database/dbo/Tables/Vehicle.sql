@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Vehicle] (
-    [VehicleId] INT          IDENTITY (1, 1) NOT NULL,
+    [VehicleId] INT NOT NULL,
     [Make]      VARCHAR (50) NOT NULL,
     [Model]     VARCHAR (50) NOT NULL,
     [VIN]       VARCHAR (50) NOT NULL,

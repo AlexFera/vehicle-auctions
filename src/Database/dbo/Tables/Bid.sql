@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Bid] (
-    [BidId]     INT      IDENTITY (1, 1) NOT NULL,
+    [BidId]     INT NOT NULL,
     [LotId]     INT      NOT NULL,
     [BuyerId]   INT      NOT NULL,
     [BidAmount] MONEY    NOT NULL,

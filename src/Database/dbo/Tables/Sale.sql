@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Sale] (
-    [SaleId]     INT          IDENTITY (1, 1) NOT NULL,
+    [SaleId]     INT NOT NULL,
     [Name]       VARCHAR (50) NOT NULL,
     [StartDate]  DATETIME     NOT NULL,
     [EndDate]    DATETIME     NOT NULL,

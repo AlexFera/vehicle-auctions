@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Lot] (
-    [LotId]        INT   IDENTITY (1, 1) NOT NULL,
+    [LotId]        INT NOT NULL,
     [StartPrice]   MONEY NOT NULL,
     [ReservePrice] MONEY NOT NULL,
     [LotStatusId]  INT   NOT NULL,
