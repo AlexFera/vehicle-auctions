@@ -13,14 +13,14 @@ Post-Deployment Script Template
 
 MERGE INTO [dbo].[Country] AS Target
 USING (
-	VALUES (0,'Romania','RO'),
-		(1,'Spain','ES'),
-		(2,'Italy','IT'),
-		(3,'France','FR'),
-		(4,'Germany','IT'),
-		(5,'United Kingdom','UK'),
-		(6,'Portugal','PT'),
-		(7,'Netherlands','NL')
+	VALUES (0,N'Romania','RO'),
+		(1,N'Spain','ES'),
+		(2,N'Italy','IT'),
+		(3,N'France','FR'),
+		(4,N'Germany','IT'),
+		(5,N'United Kingdom','UK'),
+		(6,N'Portugal','PT'),
+		(7,N'Netherlands','NL')
 	) AS Source(CountryId, Name, Code)
 	ON Target.CountryId = Source.CountryId
 WHEN MATCHED
@@ -44,3 +44,38 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
+
+MERGE INTO [dbo].[Location] AS Target
+USING (
+	VALUES (0,N'Bulevardul Iuliu Maniu, 61', '061083', 'București', 'București', 0)
+	) AS Source(LocationId, StreetAddress, PostalCode, City, StateOrProvince, CountryId)
+	ON Target.LocationId = Source.LocationId
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET StreetAddress = Source.StreetAddress
+			,PostalCode = Source.PostalCode
+			,City = Source.City
+			,StateOrProvince = Source.StateOrProvince
+			,CountryId = Source.CountryId
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			LocationId
+			,StreetAddress
+			,PostalCode
+			,City
+			,StateOrProvince
+			,CountryId
+			)
+		VALUES (
+			LocationId
+			,StreetAddress
+			,PostalCode
+			,City
+			,StateOrProvince
+			,CountryId
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;

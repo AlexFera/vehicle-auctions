@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Sale] (
     [SaleId]     INT NOT NULL,
-    [Name]       VARCHAR (50) NOT NULL,
+    [Name]       NVARCHAR(50) NOT NULL,
     [StartDate]  DATETIME     NOT NULL,
     [EndDate]    DATETIME     NOT NULL,
     [SellerId]   INT          NOT NULL,

@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[Vehicle] (
     [VehicleId] INT NOT NULL,
-    [Make]      VARCHAR (50) NOT NULL,
-    [Model]     VARCHAR (50) NOT NULL,
+    [Make]      NVARCHAR(50) NOT NULL,
+    [Model]     NVARCHAR(50) NOT NULL,
     [VIN]       VARCHAR (50) NOT NULL,
-    [Color]     VARCHAR (50) NOT NULL,
+    [Color]     NVARCHAR(50) NOT NULL,
     [Mileage]   INT          NOT NULL,
     [LotItemId] INT          NOT NULL,
     CONSTRAINT [PK_Vehicle] PRIMARY KEY CLUSTERED ([VehicleId] ASC),
