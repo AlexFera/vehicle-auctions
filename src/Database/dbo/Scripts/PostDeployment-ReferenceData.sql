@@ -47,7 +47,7 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Location] AS Target
 USING (
-	VALUES (0,N'Bulevardul Iuliu Maniu, 61', '061083', 'București', 'București', 0)
+	VALUES (0,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 0)
 	) AS Source(LocationId, StreetAddress, PostalCode, City, StateOrProvince, CountryId)
 	ON Target.LocationId = Source.LocationId
 WHEN MATCHED
