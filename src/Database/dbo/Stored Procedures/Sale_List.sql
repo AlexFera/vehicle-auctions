@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Sale_List]
 AS
-SELECT SaleId
+SELECT Id
 	,Name
 	,StartDate
 	,EndDate

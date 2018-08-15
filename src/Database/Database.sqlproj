@@ -80,7 +80,6 @@
     <Build Include="dbo\Tables\LotStatus.sql" />
     <Build Include="dbo\Tables\LotItem.sql" />
     <Build Include="dbo\Tables\Vehicle.sql" />
-    <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\Buyer.sql" />
     <Build Include="dbo\Tables\Seller.sql" />
     <Build Include="dbo\Tables\Bid.sql" />
@@ -100,5 +99,8 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Scripts\PostDeployment-ReferenceData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
 </Project>

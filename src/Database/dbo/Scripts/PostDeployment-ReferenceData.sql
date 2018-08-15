@@ -15,8 +15,8 @@ USING (
 	VALUES (0,N'None'),
 		(1,N'Open'),
 		(2,N'Closed')
-	) AS Source(SaleTypeId, Value)
-	ON Target.SaleTypeId = Source.SaleTypeId
+	) AS Source(Id, Value)
+	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
@@ -24,11 +24,11 @@ WHEN MATCHED
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
-			SaleTypeId
+			Id
 			,Value
 			)
 		VALUES (
-			SaleTypeId
+			Id
 			,Value
 			)
 WHEN NOT MATCHED BY SOURCE
@@ -45,8 +45,8 @@ USING (
 		(5,N'United Kingdom','UK'),
 		(6,N'Portugal','PT'),
 		(7,N'Netherlands','NL')
-	) AS Source(CountryId, Name, Code)
-	ON Target.CountryId = Source.CountryId
+	) AS Source(Id, Name, Code)
+	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
@@ -55,12 +55,12 @@ WHEN MATCHED
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
-			CountryId
+			Id
 			,Name
 			,Code
 			)
 		VALUES (
-			CountryId
+			Id
 			,Name
 			,Code
 			)
@@ -75,8 +75,8 @@ USING (
 	(2,N'Floßhafenstraße 5', N'41460', N'Neuss', N'Neuss', 4),
 	(3,N'Calle Oporto, 2', N'41430', N'La Luisiana', N'Sevilla', 1),
 	(4,N'Prince William Ave', N'CH5 2QZ', N'Sandycroft', N'Chester', 5)
-	) AS Source(LocationId, StreetAddress, PostalCode, City, StateOrProvince, CountryId)
-	ON Target.LocationId = Source.LocationId
+	) AS Source(Id, StreetAddress, PostalCode, City, StateOrProvince, CountryId)
+	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
@@ -88,7 +88,7 @@ WHEN MATCHED
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
-			LocationId
+			Id
 			,StreetAddress
 			,PostalCode
 			,City
@@ -96,7 +96,7 @@ WHEN NOT MATCHED BY TARGET
 			,CountryId
 			)
 		VALUES (
-			LocationId
+			Id
 			,StreetAddress
 			,PostalCode
 			,City
@@ -111,8 +111,8 @@ WHEN NOT MATCHED BY SOURCE
 MERGE INTO [dbo].[Seller] AS Target
 USING (
 	VALUES (0,N'Dealer Auto București', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7')
-	) AS Source(SellerId, CompanyName, UserId)
-	ON Target.SellerId = Source.SellerId
+	) AS Source(Id, CompanyName, UserId)
+	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
@@ -121,12 +121,12 @@ WHEN MATCHED
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
-			SellerId
+			Id
 			,CompanyName
 			,UserId
 			)
 		VALUES (
-			SellerId
+			Id
 			,CompanyName
 			,UserId
 			)
@@ -137,8 +137,8 @@ WHEN NOT MATCHED BY SOURCE
 MERGE INTO [dbo].[Sale] AS Target
 USING (
 	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 14:57:44.390', '2018-10-14 14:57:44.390', 0, 0, 1)
-	) AS Source(SaleId, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId)
-	ON Target.SaleId = Source.SaleId
+	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId)
+	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
@@ -151,7 +151,7 @@ WHEN MATCHED
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
-			SaleId
+			Id
 			,Name
 			,StartDate
 			,EndDate
@@ -160,7 +160,7 @@ WHEN NOT MATCHED BY TARGET
 			,SaleTypeId
 			)
 		VALUES (
-			SaleId
+			Id
 			,Name
 			,StartDate
 			,EndDate
