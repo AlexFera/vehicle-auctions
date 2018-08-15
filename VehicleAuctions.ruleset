@@ -657,4 +657,7 @@
     <Rule Id="C6995" Action="Warning" />
     <Rule Id="C6997" Action="Warning" />
   </Rules>
+  <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
+    <Rule Id="CA2007" Action="None" />
+  </Rules>
 </RuleSet>

@@ -1,4 +1,6 @@
-﻿using Infrastructure.Identity;
+﻿using Core.Interfaces;
+using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,8 +49,7 @@ namespace Web
                 };
             });
 
-            services.AddMemoryCache();
-
+            services.AddScoped<ISaleRepository, SaleRepository>();
 
             var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()

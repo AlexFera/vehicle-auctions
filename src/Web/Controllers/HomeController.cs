@@ -1,13 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Web.ViewModels;
 
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ISaleRepository saleRepository;
+
+        public HomeController(ISaleRepository saleRepository)
         {
+            this.saleRepository = saleRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var sales = await this.saleRepository.ListActiveSalesAsync();
+            foreach (var sale in sales)
+            {
+                break;
+            }
+
             return View();
         }
 
@@ -22,11 +37,6 @@ namespace Web.Controllers
         {
             ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
             return View();
         }
 

@@ -67,6 +67,7 @@
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Sale.sql" />
@@ -81,5 +82,9 @@
     <Build Include="dbo\Tables\Buyer.sql" />
     <Build Include="dbo\Tables\Seller.sql" />
     <Build Include="dbo\Tables\Bid.sql" />
+    <Build Include="dbo\Stored Procedures\Sale_List.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Database.publish.xml" />
   </ItemGroup>
 </Project>
