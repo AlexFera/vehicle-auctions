@@ -14,6 +14,6 @@ namespace Core.Entities.SaleAggregate
 
         public int SellerId { get; set; }
 
-        public int LocationId { get; set; }
+        public Location Location { get; set; }
     }
 }

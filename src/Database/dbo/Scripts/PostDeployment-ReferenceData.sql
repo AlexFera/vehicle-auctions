@@ -44,7 +44,6 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
-
 MERGE INTO [dbo].[Location] AS Target
 USING (
 	VALUES (0,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 0),
