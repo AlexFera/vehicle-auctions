@@ -10,6 +10,30 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+MERGE INTO [dbo].[SaleType] AS Target
+USING (
+	VALUES (0,N'None'),
+		(1,N'Open'),
+		(2,N'Closed')
+	) AS Source(SaleTypeId, Value)
+	ON Target.SaleTypeId = Source.SaleTypeId
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET Value = Source.Value
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			SaleTypeId
+			,Value
+			)
+		VALUES (
+			SaleTypeId
+			,Value
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
 
 MERGE INTO [dbo].[Country] AS Target
 USING (
@@ -82,3 +106,65 @@ WHEN NOT MATCHED BY TARGET
 WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
+
+
+MERGE INTO [dbo].[Seller] AS Target
+USING (
+	VALUES (0,N'Dealer Auto București', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7')
+	) AS Source(SellerId, CompanyName, UserId)
+	ON Target.SellerId = Source.SellerId
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET CompanyName = Source.CompanyName
+			,UserId = Source.UserId
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			SellerId
+			,CompanyName
+			,UserId
+			)
+		VALUES (
+			SellerId
+			,CompanyName
+			,UserId
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
+
+--MERGE INTO [dbo].[Sale] AS Target
+--USING (
+--	VALUES (0,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 0)
+--	) AS Source(SaleId, Name, StartDate, EndDate, SellerId, LocationId)
+--	ON Target.SaleId = Source.SaleId
+--WHEN MATCHED
+--	THEN
+--		UPDATE
+--		SET StreetAddress = Source.StreetAddress
+--			,PostalCode = Source.PostalCode
+--			,City = Source.City
+--			,StateOrProvince = Source.StateOrProvince
+--			,CountryId = Source.CountryId
+--WHEN NOT MATCHED BY TARGET
+--	THEN
+--		INSERT (
+--			LocationId
+--			,StreetAddress
+--			,PostalCode
+--			,City
+--			,StateOrProvince
+--			,CountryId
+--			)
+--		VALUES (
+--			LocationId
+--			,StreetAddress
+--			,PostalCode
+--			,City
+--			,StateOrProvince
+--			,CountryId
+--			)
+--WHEN NOT MATCHED BY SOURCE
+--	THEN
+--		DELETE;

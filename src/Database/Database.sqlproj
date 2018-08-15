@@ -93,6 +93,7 @@
     <Build Include="dbo\Tables\AspNetUsers.sql" />
     <Build Include="dbo\Tables\AspNetUserTokens.sql" />
     <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
+    <Build Include="dbo\Tables\SaleType.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />
