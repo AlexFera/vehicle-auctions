@@ -17,13 +17,10 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var sales = await this.saleRepository.ListActiveSalesAsync();
-            foreach (var sale in sales)
-            {
-                break;
-            }
+            var activeSales = await this.saleRepository.ListActiveSalesAsync();
+            var viewModel = new SaleViewModel { ActiveSales = activeSales };
 
-            return View();
+            return View(viewModel);
         }
 
         public IActionResult About()

@@ -37,14 +37,14 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Country] AS Target
 USING (
-	VALUES (0,N'Romania','RO'),
-		(1,N'Spain','ES'),
-		(2,N'Italy','IT'),
-		(3,N'France','FR'),
-		(4,N'Germany','IT'),
-		(5,N'United Kingdom','UK'),
-		(6,N'Portugal','PT'),
-		(7,N'Netherlands','NL')
+	VALUES (0,N'Romania','ro'),
+		(1,N'Spain','es'),
+		(2,N'Italy','it'),
+		(3,N'France','fr'),
+		(4,N'Germany','it'),
+		(5,N'United Kingdom','uk'),
+		(6,N'Portugal','pt'),
+		(7,N'Netherlands','nl')
 	) AS Source(Id, Name, Code)
 	ON Target.Id = Source.Id
 WHEN MATCHED

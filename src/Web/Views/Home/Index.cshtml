@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home";
 }
 
+@model SaleViewModel
+
 <div class="jumbotron">
     <div class="container">
         <h1>Welcome!</h1>
@@ -13,102 +15,36 @@
 
 <div class="row">
     <div class="col-md-12" align="center">
-        <h1>Next auctions across Europe</h1>
+        <h1>Current sales across Europe</h1>
     </div>
 </div>
 
 <hr />
 
-<div class="row">
-    <div class="col-md-12" align="center">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>End date</h4>
-                <h3>13:40</h3>
-                <h4>14.03.2018</h4>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <a href="#"><img src="~/images/sale_logo.png" /></a>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <span class="label label-info">Sealed bids</span>
-                <span class="label label-default">Spain</span>
-                <h3>123 lots</h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr />
-
-<div class="row">
-    <div class="col-md-12" align="center">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>End date</h4>
-                <h3>13:40</h3>
-                <h4>14.03.2018</h4>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <a href="#"><img src="~/images/sale_logo.png" /></a>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <span class="label label-info">Sealed bids</span>
-                <span class="label label-default">Romania</span>
-                <h3>123 lots</h3>
+@foreach (var sale in Model.ActiveSales)
+{
+    <div class="row">
+        <div class="col-md-12" align="center">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>End date</h4>
+                    <h3>@sale.EndDate.ToShortTimeString()</h3>
+                    <h4>@sale.EndDate.ToShortDateString()</h4>
+                </div>
+                <div class="col-md-4">
+                    <br />
+                    <a href="#"><img src="~/images/sale_logo.png" /></a>
+                </div>
+                <div class="col-md-4">
+                    <br />
+                    <span class="label label-info">@sale.SaleType</span>
+                    <span class="label label-default">@sale.Location.Country.Name</span>
+                    <span class="flag-icon flag-icon-@sale.Location.Country.Code"></span>
+                    <h3>123 lots</h3>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<hr />
-
-<div class="row">
-    <div class="col-md-12" align="center">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>End date</h4>
-                <h3>13:40</h3>
-                <h4>14.03.2018</h4>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <a href="#"><img src="~/images/sale_logo.png" /></a>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <span class="label label-info">Sealed bids</span>
-                <span class="label label-default">Germany</span>
-                <h3>123 lots</h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr />
-
-<div class="row">
-    <div class="col-md-12" align="center">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>End date</h4>
-                <h3>13:40</h3>
-                <h4>14.03.2018</h4>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <a href="#"><img src="~/images/sale_logo.png" /></a>
-            </div>
-            <div class="col-md-4">
-                <br />
-                <span class="label label-info">Sealed bids</span>
-                <span class="label label-default">United Kingdom</span>
-                <h3>123 lots</h3>
-            </div>
-        </div>
-    </div>
-</div>
+    <hr />
+}
