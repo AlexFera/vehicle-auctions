@@ -70,6 +70,7 @@
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="dbo\Views" />
     <Folder Include="dbo\Scripts" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Sale.sql" />
@@ -84,6 +85,14 @@
     <Build Include="dbo\Tables\Seller.sql" />
     <Build Include="dbo\Tables\Bid.sql" />
     <Build Include="dbo\Stored Procedures\Sale_List.sql" />
+    <Build Include="dbo\Tables\AspNetRoleClaims.sql" />
+    <Build Include="dbo\Tables\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\AspNetUserTokens.sql" />
+    <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />

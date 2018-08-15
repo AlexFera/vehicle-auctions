@@ -20,7 +20,7 @@ namespace Infrastructure.Data
 
         public async Task<IEnumerable<Sale>> ListActiveSalesAsync()
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("CatalogConnection")))
+            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
             {
                 return await sqlConnection.QueryAsync<Sale>("Sale_List", commandType: CommandType.StoredProcedure);
             }

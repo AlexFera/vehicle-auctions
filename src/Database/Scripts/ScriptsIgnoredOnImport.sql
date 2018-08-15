@@ -1,0 +1,238 @@
+﻿
+USE [master]
+GO
+
+/****** Object:  Database [vehicleauctions.identity]    Script Date: 15.08.2018 16:09:30 ******/
+CREATE DATABASE [vehicleauctions.identity]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'vehicleauctions.identity', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\vehicleauctions.identity.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'vehicleauctions.identity_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\vehicleauctions.identity_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET COMPATIBILITY_LEVEL = 140
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [vehicleauctions.identity].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET ANSI_NULL_DEFAULT OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET ANSI_NULLS OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET ANSI_PADDING OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET ANSI_WARNINGS OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET ARITHABORT OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET AUTO_CLOSE OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET AUTO_SHRINK OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET AUTO_UPDATE_STATISTICS ON
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET CURSOR_CLOSE_ON_COMMIT OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET CURSOR_DEFAULT  GLOBAL
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET CONCAT_NULL_YIELDS_NULL OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET NUMERIC_ROUNDABORT OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET QUOTED_IDENTIFIER OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET RECURSIVE_TRIGGERS OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET  DISABLE_BROKER
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET AUTO_UPDATE_STATISTICS_ASYNC OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET DATE_CORRELATION_OPTIMIZATION OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET TRUSTWORTHY OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET ALLOW_SNAPSHOT_ISOLATION OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET PARAMETERIZATION SIMPLE
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET READ_COMMITTED_SNAPSHOT OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET HONOR_BROKER_PRIORITY OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET RECOVERY FULL
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET  MULTI_USER
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET PAGE_VERIFY CHECKSUM
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET DB_CHAINING OFF
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF )
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET TARGET_RECOVERY_TIME = 60 SECONDS
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET DELAYED_DURABILITY = DISABLED
+GO
+
+EXEC sys.sp_db_vardecimal_storage_format N'vehicleauctions.identity', N'ON'
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET QUERY_STORE = OFF
+GO
+
+USE [vehicleauctions.identity]
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET LEGACY_CARDINALITY_ESTIMATION = OFF;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET LEGACY_CARDINALITY_ESTIMATION = PRIMARY;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 0;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET MAXDOP = PRIMARY;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET PARAMETER_SNIFFING = ON;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET PARAMETER_SNIFFING = PRIMARY;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES = PRIMARY;
+GO
+
+USE [vehicleauctions.identity]
+GO
+
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[AspNetRoleClaims]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[AspNetUserTokens]    Script Date: 15.08.2018 16:09:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+USE [master]
+GO
+
+ALTER DATABASE [vehicleauctions.identity] SET  READ_WRITE
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = ON;
+
+GO
+
+--Syntax Error: Incorrect syntax near IDENTITY_CACHE.
+--ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = ON;
+
+
+
+GO

@@ -31,7 +31,7 @@ namespace Web
         {
             // Add Identity DbContext
             services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
               .AddEntityFrameworkStores<AppIdentityDbContext>()
