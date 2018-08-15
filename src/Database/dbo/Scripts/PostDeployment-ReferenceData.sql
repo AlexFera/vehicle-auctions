@@ -134,37 +134,40 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
---MERGE INTO [dbo].[Sale] AS Target
---USING (
---	VALUES (0,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 0)
---	) AS Source(SaleId, Name, StartDate, EndDate, SellerId, LocationId)
---	ON Target.SaleId = Source.SaleId
---WHEN MATCHED
---	THEN
---		UPDATE
---		SET StreetAddress = Source.StreetAddress
---			,PostalCode = Source.PostalCode
---			,City = Source.City
---			,StateOrProvince = Source.StateOrProvince
---			,CountryId = Source.CountryId
---WHEN NOT MATCHED BY TARGET
---	THEN
---		INSERT (
---			LocationId
---			,StreetAddress
---			,PostalCode
---			,City
---			,StateOrProvince
---			,CountryId
---			)
---		VALUES (
---			LocationId
---			,StreetAddress
---			,PostalCode
---			,City
---			,StateOrProvince
---			,CountryId
---			)
---WHEN NOT MATCHED BY SOURCE
---	THEN
---		DELETE;
+MERGE INTO [dbo].[Sale] AS Target
+USING (
+	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 14:57:44.390', '2018-10-14 14:57:44.390', 0, 0, 1)
+	) AS Source(SaleId, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId)
+	ON Target.SaleId = Source.SaleId
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET Name = Source.Name
+			,StartDate = Source.StartDate
+			,EndDate = Source.EndDate
+			,SellerId = Source.SellerId
+			,LocationId = Source.LocationId
+			,SaleTypeId = Source.SaleTypeId
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			SaleId
+			,Name
+			,StartDate
+			,EndDate
+			,SellerId
+			,LocationId
+			,SaleTypeId
+			)
+		VALUES (
+			SaleId
+			,Name
+			,StartDate
+			,EndDate
+			,SellerId
+			,LocationId
+			,SaleTypeId
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
