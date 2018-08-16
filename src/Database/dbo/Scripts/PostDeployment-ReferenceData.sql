@@ -291,3 +291,91 @@ WHEN NOT MATCHED BY TARGET
 WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
+
+MERGE INTO [dbo].[LotItem] AS Target
+USING (
+	VALUES (0,0)
+	) AS Source(Id, LotId)
+	ON Target.Id = Source.Id
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET LotId = Source.LotId
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			Id
+			,LotId
+			)
+		VALUES (
+			Id
+			,LotId
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
+
+MERGE INTO [dbo].[Vehicle] AS Target
+USING (
+	VALUES (0,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,0,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076/310',N'2015-06-01',1461,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors',N'Satellite Navigation - Garmin MAP PILOT',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1)
+	) AS Source(Id,Make,Model,VIN,Color,Mileage,LotItemId,ImageUrl,FirstRegistrationDate,EngineCapacity,EngineType,NumberOfDoors,FuelType,EquipmentInterior,EquipmentExterior,EquipmentInfotainment,EquipmentEngineTechnology,VehicleSource,CurrentCountryOfRegistration,HasServiceHistory,EuroEmissionStandard,HasAccidentDamage,HasSecondKeyAvailable)
+	ON Target.Id = Source.Id
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET Make = Source.Make
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			Id
+			,Make
+			,Model
+			,VIN
+			,Color
+			,Mileage
+			,LotItemId
+			,ImageUrl
+			,FirstRegistrationDate
+			,EngineCapacity
+			,EngineType
+			,NumberOfDoors
+			,FuelType
+			,EquipmentInterior
+			,EquipmentExterior
+			,EquipmentInfotainment
+			,EquipmentEngineTechnology
+			,VehicleSource
+			,CurrentCountryOfRegistration
+			,HasServiceHistory
+			,EuroEmissionStandard
+			,HasAccidentDamage
+			,HasSecondKeyAvailable
+			)
+		VALUES (
+			Id
+			,Make
+			,Model
+			,VIN
+			,Color
+			,Mileage
+			,LotItemId
+			,ImageUrl
+			,FirstRegistrationDate
+			,EngineCapacity
+			,EngineType
+			,NumberOfDoors
+			,FuelType
+			,EquipmentInterior
+			,EquipmentExterior
+			,EquipmentInfotainment
+			,EquipmentEngineTechnology
+			,VehicleSource
+			,CurrentCountryOfRegistration
+			,HasServiceHistory
+			,EuroEmissionStandard
+			,HasAccidentDamage
+			,HasSecondKeyAvailable
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
