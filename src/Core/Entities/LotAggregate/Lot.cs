@@ -2,6 +2,8 @@
 {
     public class Lot
     {
+        public int Id { get; set; }
+
         public decimal StartPrice { get; set; }
 
         public decimal ReservePrice { get; set; }
