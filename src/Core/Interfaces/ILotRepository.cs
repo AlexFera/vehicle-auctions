@@ -7,5 +7,7 @@ namespace Core.Interfaces
     public interface ILotRepository
     {
         Task<IEnumerable<Lot>> ListLotsAsync(int saleId);
+
+        Task<Lot> GetLotAsync(int lotId);
     }
 }

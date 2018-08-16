@@ -2,6 +2,7 @@
     ViewData["Title"] = "Details";
 }
 
+@model LotDetailsViewModel
 
 <br />
 
@@ -9,8 +10,8 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-body">
-                <h3>SKODA Yeti 1.8 TSI COMFORT 4X4 Manual Petrol</h3>
-                <h4>160PS, 142094km, 2011</h4>
+                <h3>@Model.Lot.Vehicle.Make @Model.Lot.Vehicle.Model @Model.Lot.Vehicle.EngineCapacity @Model.Lot.Vehicle.EngineType @Model.Lot.Vehicle.TransmissionType @Model.Lot.Vehicle.FuelType</h3>
+                <h4>@Model.Lot.Vehicle.EnginePower, @Model.Lot.Vehicle.Mileage.ToString("N0") km, @Model.Lot.Vehicle.FirstRegistrationDate.Year</h4>
             </div>
         </div>
     </div>
@@ -19,7 +20,7 @@
 <div class="row">
     <div class="col-md-4 col-md-offset-2">
         <a href="#" class="thumbnail">
-            <img src="https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/98-SPR-1/152812188/310">
+            <img src="@Model.Lot.Vehicle.ImageUrl/310">
         </a>
     </div>
     <div class="col-md-4">
@@ -56,27 +57,27 @@
             <table class="table-condensed">
                 <tr>
                     <td>VIN Number</td>
-                    <td>2565</td>
+                    <td>@Model.Lot.Vehicle.VIN</td>
                 </tr>
                 <tr>
                     <td>First Registration Date</td>
-                    <td>15/11/2011 </td>
+                    <td>@Model.Lot.Vehicle.FirstRegistrationDate.ToShortDateString()</td>
                 </tr>
                 <tr>
                     <td>Fuel Type</td>
-                    <td>Petrol</td>
+                    <td>@Model.Lot.Vehicle.FuelType</td>
                 </tr>
                 <tr>
-                    <td>Engine Size (cc)</td>
-                    <td>1798</td>
+                    <td>Engine Size</td>
+                    <td>@Model.Lot.Vehicle.EngineCapacity</td>
                 </tr>
                 <tr>
                     <td>Number of Seats</td>
-                    <td>5</td>
+                    <td>@Model.Lot.Vehicle.NumberOfDoors</td>
                 </tr>
                 <tr>
-                    <td>Colour (Generic)</td>
-                    <td>White</td>
+                    <td>Color</td>
+                    <td>@Model.Lot.Vehicle.Color</td>
                 </tr>
             </table>
         </div>
@@ -86,24 +87,15 @@
             <!-- Default panel contents -->
             <div class="panel-heading">Interior</div>
             <table class="table-condensed">
-                <tr>
-                    <td>AirConditioning </td>
-                </tr>
-                <tr>
-                    <td>Powered Windows - Front</td>
-                </tr>
-                <tr>
-                    <td>Climate Control </td>
-                </tr>
-                <tr>
-                    <td>Seat Covering - Leather</td>
-                </tr>
-                <tr>
-                    <td>Seats Heating - Front</td>
-                </tr>
-                <tr>
-                    <td>Sunroof</td>
-                </tr>
+                @{
+                    var interiorItems = Model.Lot.Vehicle.EquipmentInterior.Split('|');
+                    foreach (var interiorItem in interiorItems)
+                    {
+                        <tr>
+                            <td>@interiorItem</td>
+                        </tr>
+                    }
+                }
             </table>
         </div>
     </div>
@@ -115,15 +107,15 @@
             <!-- Default panel contents -->
             <div class="panel-heading">Infotainment</div>
             <table class="table-condensed">
-                <tr>
-                    <td>Bluetooth Telephone Interface</td>
-                </tr>
-                <tr>
-                    <td>CD - Single</td>
-                </tr>
-                <tr>
-                    <td>Satellite Navigation</td>
-                </tr>
+                @{
+                    var InfotainmentItems = Model.Lot.Vehicle.EquipmentInfotainment.Split('|');
+                    foreach (var InfotainmentItem in InfotainmentItems)
+                    {
+                        <tr>
+                            <td>@InfotainmentItem</td>
+                        </tr>
+                    }
+                }
             </table>
         </div>
     </div>
@@ -132,21 +124,15 @@
             <!-- Default panel contents -->
             <div class="panel-heading">Engine & Technology</div>
             <table class="table-condensed">
-                <tr>
-                    <td>Anti-Lock Braking</td>
-                </tr>
-                <tr>
-                    <td>Central Locking</td>
-                </tr>
-                <tr>
-                    <td>Cruise Control</td>
-                </tr>
-                <tr>
-                    <td>Remote Central Locking</td>
-                </tr>
-                <tr>
-                    <td>Cruise Control </td>
-                </tr>
+                @{
+                    var engineItems = Model.Lot.Vehicle.EquipmentEngineTechnology.Split('|');
+                    foreach (var engineItem in engineItems)
+                    {
+                        <tr>
+                            <td>@engineItem</td>
+                        </tr>
+                    }
+                }
             </table>
         </div>
     </div>
@@ -158,15 +144,15 @@
             <!-- Default panel contents -->
             <div class="panel-heading">Exterior</div>
             <table class="table-condensed">
-                <tr>
-                    <td>Rain Sensitive Windscreen Wipers </td>
-                </tr>
-                <tr>
-                    <td>Space Saver Spare Wheel </td>
-                </tr>
-                <tr>
-                    <td>Tow Ball - Static </td>
-                </tr>
+                @{
+                    var exteriorItems = Model.Lot.Vehicle.EquipmentExterior.Split('|');
+                    foreach (var exteriorItem in exteriorItems)
+                    {
+                        <tr>
+                            <td>@exteriorItem</td>
+                        </tr>
+                    }
+                }
             </table>
         </div>
     </div>
@@ -177,15 +163,23 @@
             <table class="table-condensed">
                 <tr>
                     <td>Vehicle Source</td>
-                    <td>Lease</td>
+                    <td>@Model.Lot.Vehicle.VehicleSource</td>
                 </tr>
                 <tr>
                     <td>Current Country of Registration</td>
-                    <td>Netherlands</td>
+                    <td>@Model.Lot.Vehicle.CurrentCountryOfRegistration</td>
                 </tr>
                 <tr>
                     <td>Service History</td>
-                    <td>Present</td>
+                    <td>@Model.Lot.Vehicle.HasServiceHistory</td>
+                </tr>
+                <tr>
+                    <td>Accident Damage</td>
+                    <td>@Model.Lot.Vehicle.HasAccidentDamage</td>
+                </tr>
+                <tr>
+                    <td>Second key available</td>
+                    <td>@Model.Lot.Vehicle.HasSecondKeyAvailable</td>
                 </tr>
             </table>
         </div>

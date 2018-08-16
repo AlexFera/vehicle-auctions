@@ -22,9 +22,12 @@ namespace Web.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Details()
+        public async Task<IActionResult> Details(int lotId)
         {
-            return View();
+            var lot = await this.lotRepository.GetLotAsync(lotId);
+            var viewModel = new LotDetailsViewModel { Lot = lot };
+
+            return View(viewModel);
         }
     }
 }

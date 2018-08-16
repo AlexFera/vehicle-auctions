@@ -317,7 +317,7 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Vehicle] AS Target
 USING (
-	VALUES (0,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,0,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076/100',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors',N'Satellite Navigation - Garmin MAP PILOT',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
+	VALUES (0,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,0,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
 	) AS Source(Id,Make,Model,VIN,Color,Mileage,LotItemId,ImageUrl,FirstRegistrationDate,EngineCapacity,EngineType,NumberOfDoors,FuelType,EquipmentInterior,EquipmentExterior,EquipmentInfotainment,EquipmentEngineTechnology,VehicleSource,CurrentCountryOfRegistration,HasServiceHistory,EuroEmissionStandard,HasAccidentDamage,HasSecondKeyAvailable,TransmissionType, EnginePower)
 	ON Target.Id = Source.Id
 WHEN MATCHED

@@ -95,6 +95,7 @@
     <Build Include="dbo\Tables\SaleType.sql" />
     <Build Include="dbo\Stored Procedures\LotCount_Get.sql" />
     <Build Include="dbo\Stored Procedures\Lot_ListBySaleId.sql" />
+    <Build Include="dbo\Stored Procedures\Lot_GetByLotId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />
