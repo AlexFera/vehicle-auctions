@@ -23,6 +23,32 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
+MERGE INTO [dbo].[LotStatus] AS Target
+USING (
+	VALUES (0,N'None'),
+		(1,N'InSale'),
+		(2,N'Sold'),
+		(3,N'NotSold')
+	) AS Source(Id, Value)
+	ON Target.Id = Source.Id
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET Value = Source.Value
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			Id
+			,Value
+			)
+		VALUES (
+			Id
+			,Value
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
+
 MERGE INTO [dbo].[Country] AS Target
 USING (
 	VALUES (0,N'Romania','ro'),
