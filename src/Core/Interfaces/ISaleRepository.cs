@@ -7,5 +7,7 @@ namespace Core.Interfaces
     public interface ISaleRepository
     {
         Task<IEnumerable<Sale>> ListActiveSalesAsync();
+
+        Task<int> GetLotCountAsync(int saleId);
     }
 }

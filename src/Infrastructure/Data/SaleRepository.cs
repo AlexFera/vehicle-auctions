@@ -4,6 +4,7 @@ using Core.Interfaces;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace Infrastructure.Data
             {
                 sqlConnection.Open();
 
-                return await sqlConnection.QueryAsync<Sale, Seller, Location, Country, Sale>("Sale_List",
+                var sales = await sqlConnection.QueryAsync<Sale, Seller, Location, Country, Sale>("Sale_List",
                     map: (sale, seller, location, country) =>
                     {
                         sale.Seller = seller;
@@ -32,6 +33,26 @@ namespace Infrastructure.Data
                         sale.Location.Country = country;
                         return sale;
                     });
+
+                foreach (var sale in sales)
+                {
+                    sale.NumberOfLots = await GetLotCountAsync(sale.Id);
+                }
+
+                return sales;
+            }
+        }
+
+        public async Task<int> GetLotCountAsync(int saleId)
+        {
+            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            {
+                sqlConnection.Open();
+
+                var p = new DynamicParameters();
+                p.Add("saleId", saleId);
+
+                return await sqlConnection.ExecuteScalarAsync<int>("LotCount_Get", p, commandType: CommandType.StoredProcedure);
             }
         }
 

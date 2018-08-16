@@ -17,5 +17,7 @@ namespace Core.Entities.SaleAggregate
         public Seller Seller { get; set; }
 
         public Location Location { get; set; }
+
+        public int NumberOfLots { get; set; }
     }
 }

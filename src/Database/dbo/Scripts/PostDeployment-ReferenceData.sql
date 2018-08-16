@@ -258,3 +258,36 @@ WHEN NOT MATCHED BY TARGET
 WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
+
+
+MERGE INTO [dbo].[Lot] AS Target
+USING (
+	VALUES (0,5000, 12500, 1, 0)
+	) AS Source(Id, StartPrice, ReservePrice, LotStatusId, SaleId)
+	ON Target.Id = Source.Id
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET StartPrice = Source.StartPrice
+			,ReservePrice = Source.ReservePrice
+			,LotStatusId = Source.LotStatusId
+			,SaleId = Source.SaleId
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			Id
+			,StartPrice
+			,ReservePrice
+			,LotStatusId
+			,SaleId
+			)
+		VALUES (
+			Id
+			,StartPrice
+			,ReservePrice
+			,LotStatusId
+			,SaleId
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
