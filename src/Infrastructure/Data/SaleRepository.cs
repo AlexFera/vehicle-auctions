@@ -32,7 +32,8 @@ namespace Infrastructure.Data
                         sale.Location = location;
                         sale.Location.Country = country;
                         return sale;
-                    });
+                    },
+                    commandType: CommandType.StoredProcedure);
 
                 foreach (var sale in sales)
                 {
@@ -53,23 +54,6 @@ namespace Infrastructure.Data
                 p.Add("saleId", saleId);
 
                 return await sqlConnection.ExecuteScalarAsync<int>("LotCount_Get", p, commandType: CommandType.StoredProcedure);
-            }
-        }
-
-        public async Task<IEnumerable<Sale>> ListLotsAsync()
-        {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
-            {
-                sqlConnection.Open();
-
-                return await sqlConnection.QueryAsync<Sale, Seller, Location, Country, Sale>("Lot_ListBySaleId",
-                    map: (sale, seller, location, country) =>
-                    {
-                        sale.Seller = seller;
-                        sale.Location = location;
-                        sale.Location.Country = country;
-                        return sale;
-                    });
             }
         }
     }

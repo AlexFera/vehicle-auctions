@@ -50,6 +50,7 @@ namespace Web
             });
 
             services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddScoped<ILotRepository, LotRepository>();
 
             var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()

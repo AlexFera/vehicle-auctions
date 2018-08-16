@@ -2,6 +2,7 @@
     ViewData["Title"] = "Search";
 }
 
+@model LotSearchViewModel
 
 <br />
 <br />
@@ -23,39 +24,44 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Returned 211 results</h2>
+        <h2>Returned @Model.Lots.Count() results</h2>
     </div>
 </div>
 
 <hr />
 
-<div class="row">
-    <div class="col-md-12" align="center">
-        <div class="row">
-            <div class="col-md-3">
-                <a href="#">
-                    <img src="~/images/vehicle_thumbnail.jpg" class="img-thumbnail">
-                </a>
-            </div>
-            <div class="col-md-3">
-                <br />
-                <h4>Alfa Romeo Giulietta 1.6 JTDM, 2013</h4>
-            </div>
-            <div class="col-md-3">
-                <h5>152.301 KM</h5>
-                <h5>19.12.2013</h5>
-                <h5>5 doors</h5>
-            </div>
-            <div class="col-md-3">
-                <h5>Manual</h5>
-                <h5>Diesel</h5>
-                <h5>97 KW / 130 HP</h5>
+@foreach (var lot in Model.Lots)
+{
+    <div class="row">
+        <div class="col-md-12" align="center">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="#">
+                        <img src="@lot.Vehicle.ImageUrl" class="img-thumbnail">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <br />
+                    <h4>@lot.Vehicle.Make @lot.Vehicle.Model @lot.Vehicle.EngineCapacity @lot.Vehicle.EngineType - @lot.Vehicle.FirstRegistrationDate.Year</h4>
+                </div>
+                <div class="col-md-3">
+                    <h5>@lot.Vehicle.Mileage KM</h5>
+                    <h5>@lot.Vehicle.FirstRegistrationDate.ToShortDateString()</h5>
+                    <h5>@lot.Vehicle.NumberOfDoors doors</h5>
+                </div>
+                <div class="col-md-3">
+                    <h5>@lot.Vehicle.TransmissionType</h5>
+                    <h5>@lot.Vehicle.FuelType</h5>
+                    <h5>97 KW / 130 HP</h5>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<hr />
+    <hr />
+}
+
+
 
 <div class="row">
     <div class="col-md-12" align="center">

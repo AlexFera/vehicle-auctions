@@ -317,13 +317,36 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Vehicle] AS Target
 USING (
-	VALUES (0,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,0,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076/310',N'2015-06-01',1461,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors',N'Satellite Navigation - Garmin MAP PILOT',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1)
-	) AS Source(Id,Make,Model,VIN,Color,Mileage,LotItemId,ImageUrl,FirstRegistrationDate,EngineCapacity,EngineType,NumberOfDoors,FuelType,EquipmentInterior,EquipmentExterior,EquipmentInfotainment,EquipmentEngineTechnology,VehicleSource,CurrentCountryOfRegistration,HasServiceHistory,EuroEmissionStandard,HasAccidentDamage,HasSecondKeyAvailable)
+	VALUES (0,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,0,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076/310',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors',N'Satellite Navigation - Garmin MAP PILOT',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
+	) AS Source(Id,Make,Model,VIN,Color,Mileage,LotItemId,ImageUrl,FirstRegistrationDate,EngineCapacity,EngineType,NumberOfDoors,FuelType,EquipmentInterior,EquipmentExterior,EquipmentInfotainment,EquipmentEngineTechnology,VehicleSource,CurrentCountryOfRegistration,HasServiceHistory,EuroEmissionStandard,HasAccidentDamage,HasSecondKeyAvailable,TransmissionType, EnginePower)
 	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
 		SET Make = Source.Make
+			,Model = Source.Model
+			,VIN = Source.VIN
+			,Color = Source.Color
+			,Mileage = Source.Mileage
+			,LotItemId = Source.LotItemId
+			,ImageUrl = Source.ImageUrl
+			,FirstRegistrationDate = Source.FirstRegistrationDate
+			,EngineCapacity = Source.EngineCapacity
+			,EngineType = Source.EngineType
+			,NumberOfDoors = Source.NumberOfDoors
+			,FuelType = Source.FuelType
+			,EquipmentInterior = Source.EquipmentInterior
+			,EquipmentExterior = Source.EquipmentExterior
+			,EquipmentInfotainment = Source.EquipmentInfotainment
+			,EquipmentEngineTechnology = Source.EquipmentEngineTechnology
+			,VehicleSource = Source.VehicleSource
+			,CurrentCountryOfRegistration = Source.CurrentCountryOfRegistration
+			,HasServiceHistory = Source.HasServiceHistory
+			,EuroEmissionStandard = Source.EuroEmissionStandard
+			,HasAccidentDamage = Source.HasAccidentDamage
+			,HasSecondKeyAvailable = Source.HasSecondKeyAvailable
+			,TransmissionType = Source.TransmissionType
+			,EnginePower = Source.EnginePower
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
@@ -350,6 +373,8 @@ WHEN NOT MATCHED BY TARGET
 			,EuroEmissionStandard
 			,HasAccidentDamage
 			,HasSecondKeyAvailable
+			,TransmissionType
+			,EnginePower
 			)
 		VALUES (
 			Id
@@ -375,6 +400,8 @@ WHEN NOT MATCHED BY TARGET
 			,EuroEmissionStandard
 			,HasAccidentDamage
 			,HasSecondKeyAvailable
+			,TransmissionType
+			,EnginePower
 			)
 WHEN NOT MATCHED BY SOURCE
 	THEN
