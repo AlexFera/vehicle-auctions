@@ -33,13 +33,13 @@
                 </div>
                 <div class="col-md-4">
                     <br />
-                    <a href="#"><img src="~/images/sale_logo.png" /></a>
-                    <h3 class="text-info">@sale.Name</h3>
+                    <a asp-action="Search" asp-controller="Lot" asp-route-saleid="@sale.Id"><img src="~/images/sale_logo.png" /></a>
+                    <a asp-action="Search" asp-controller="Lot" asp-route-saleid="@sale.Id"><h3 class="text-info">@sale.Name</h3></a>
                 </div>
                 <div class="col-md-4">
                     <span class="label label-info">@sale.SaleType</span>
-                    <span class="label label-default">@sale.Location.Country.Name</span>
-                    <span class="flag-icon flag-icon-@sale.Location.Country.Code"></span>
+                    <span class="label label-default">@sale.Location.City</span>
+                    <h3><span class="flag-icon flag-icon-@sale.Location.Country.Code"></span></h3>
                     <h3>123 lots</h3>
                 </div>
             </div>

@@ -29,7 +29,7 @@ USING (
 		(1,N'Spain','es'),
 		(2,N'Italy','it'),
 		(3,N'France','fr'),
-		(4,N'Germany','it'),
+		(4,N'Germany','de'),
 		(5,N'United Kingdom','gb'),
 		(6,N'Portugal','pt'),
 		(7,N'Netherlands','nl')
@@ -104,7 +104,8 @@ USING (
 		('9e09aa8d-59f3-490c-a3f4-66570539e201',N'sofia@mailinator.com', N'SOFIA@MAILINATOR.COM', N'sofia@mailinator.com', N'SOFIA@MAILINATOR.COM', 0, N'AQAAAAEAACcQAAAAENrFOkbeBbCN6apZ8n1QZy6yDsgOUuW3o8nDQQUlcAjdm17tRYDs2kmOnsLeXEgkIQ==', N'PWUI5LYUYYBD774RNGZELYRN2C7C2HWU', N'485dd9fa-52a5-42fd-8963-a5b9293540ca', NULL, 0, 0, NULL, 1, 0),
 		('bac3056f-bb6d-49e4-906a-1efd5521c9ce',N'andreea@mailinator.com', N'ANDREEA@MAILINATOR.COM', N'andreea@mailinator.com', N'ANDREEA@MAILINATOR.COM', 0, N'AQAAAAEAACcQAAAAEHubLNOcP7z0fdaHz7oEtzo/IUilYjKhrFHO0ddnXyoVrzIM4GMs/UJ92LVzcu1q5A==', N'PCL477A675Q47LOBC4JLS32NS6G7STEI', N'd1462afb-6ed2-41a9-b5f2-cd324e2e38f3', NULL, 0, 0, NULL, 1, 0),
 		('c5d558eb-d637-404e-9ddd-5b625fa8884d',N'vendor-united-kingdom@mailinator.com', N'VENDOR-UNITED-KINGDOM@MAILINATOR.COM', N'vendor-united-kingdom@mailinator.com', N'VENDOR-UNITED-KINGDOM@MAILINATOR.COM', 0, N'AQAAAAEAACcQAAAAEJkbyB9mGYbtTC0qHgPi/Jepbl9zdtxEmOWimeOJgho/Lh9mZqPRY5ONYAgEIhwP7g==', N'OKITXYYDZZ4EBBLLMHWKHBUYC3RCHMHO', N'374c6b0d-6eb6-414f-adee-e5b308bdc1ef', NULL, 0, 0, NULL, 1, 0),
-		('e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7',N'vendor-romania@mailinator.com', N'VENDOR-ROMANIA@MAILINATOR.COM', N'vendor-romania@mailinator.com', N'VENDOR-ROMANIA@MAILINATOR.COM', 0, N'AQAAAAEAACcQAAAAEN7TKHhF2ChxLrXv4/7Qxi5sMtrl0qpqQuHq1+3/iU0sYVVjurdGV96HFlP19yCEig==', N'LMBJQ2YTI5R2RZHWMMCB45JM6SCROJIW', N'ff0f7365-71b5-4200-804a-2704b2be4a1e', NULL, 0, 0, NULL, 1, 0)
+		('e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7',N'vendor-romania@mailinator.com', N'VENDOR-ROMANIA@MAILINATOR.COM', N'vendor-romania@mailinator.com', N'VENDOR-ROMANIA@MAILINATOR.COM', 0, N'AQAAAAEAACcQAAAAEN7TKHhF2ChxLrXv4/7Qxi5sMtrl0qpqQuHq1+3/iU0sYVVjurdGV96HFlP19yCEig==', N'LMBJQ2YTI5R2RZHWMMCB45JM6SCROJIW', N'ff0f7365-71b5-4200-804a-2704b2be4a1e', NULL, 0, 0, NULL, 1, 0),
+		('b2ff5c6d-1aa7-4d81-83a5-d77bdc68c409',N'vendor-germany@mailinator.com', N'VENDOR-GERMANY@MAILINATOR.COM', N'vendor-germany@mailinator.com', N'VENDOR-GERMANY@MAILINATOR.COM', 0, N'AQAAAAEAACcQAAAAENGGBg5K//ajoEZE9ySvn0qBZNenTHaHShKMfFC4mlCs4tIWAqMLdwX+yvJbNdpmEA==', N'55EAZ64P66IX5RXSJVI6BSEN3B4OJ4VH', N'159fc43f-e8df-4f54-878b-34ea34e66a12', NULL, 0, 0, NULL, 1, 0)
 	) AS Source(Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -165,7 +166,8 @@ MERGE INTO [dbo].[Seller] AS Target
 USING (
 	VALUES (0,N'Dealer Auto București', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7'),
 		(1,N'Spanish Auto Dealer', '2c46a26a-61d0-4900-9ec0-72d81aa38b84'),
-		(2,N'United Kingdom Auto Dealer', 'c5d558eb-d637-404e-9ddd-5b625fa8884d')
+		(2,N'United Kingdom Auto Dealer', 'c5d558eb-d637-404e-9ddd-5b625fa8884d'),
+		(3,N'Germany Auto Dealer', 'b2ff5c6d-1aa7-4d81-83a5-d77bdc68c409')
 	) AS Source(Id, CompanyName, UserId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -192,9 +194,10 @@ WHEN NOT MATCHED BY SOURCE
 MERGE INTO [dbo].[Sale] AS Target
 USING (
 	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 0, 0, 1),
-		(1,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 2, 1, 2),
+		(1,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 2, 4, 2),
 		(2,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 2, 1, 1),
-		(3,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 1, 3, 1)
+		(3,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 1, 3, 1),
+		(4,N'Behörden Auktion – Vor-Ort-Auktion', '2018-08-02 16:00:00.000', '2018-11-01 16:00:00.000', 3, 2, 1)
 	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId)
 	ON Target.Id = Source.Id
 WHEN MATCHED

@@ -34,5 +34,22 @@ namespace Infrastructure.Data
                     });
             }
         }
+
+        public async Task<IEnumerable<Sale>> ListLotsAsync()
+        {
+            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            {
+                sqlConnection.Open();
+
+                return await sqlConnection.QueryAsync<Sale, Seller, Location, Country, Sale>("Lot_ListBySaleId",
+                    map: (sale, seller, location, country) =>
+                    {
+                        sale.Seller = seller;
+                        sale.Location = location;
+                        sale.Location.Country = country;
+                        return sale;
+                    });
+            }
+        }
     }
 }
