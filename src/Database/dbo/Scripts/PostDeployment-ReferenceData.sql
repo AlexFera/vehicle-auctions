@@ -164,7 +164,8 @@ WHEN NOT MATCHED BY TARGET
 MERGE INTO [dbo].[Seller] AS Target
 USING (
 	VALUES (0,N'Dealer Auto București', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7'),
-		(1,N'Spanish Auto Dealer', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7')
+		(1,N'Spanish Auto Dealer', '2c46a26a-61d0-4900-9ec0-72d81aa38b84'),
+		(2,N'United Kingdom Auto Dealer', 'c5d558eb-d637-404e-9ddd-5b625fa8884d')
 	) AS Source(Id, CompanyName, UserId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -191,7 +192,9 @@ WHEN NOT MATCHED BY SOURCE
 MERGE INTO [dbo].[Sale] AS Target
 USING (
 	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 0, 0, 1),
-		(1,N'A large vehicle sale', '2018-08-18 15:00:00.000', '2018-10-20 15:00:00.000', 0, 1, 2)
+		(1,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 2, 1, 2),
+		(2,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 2, 1, 1),
+		(3,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 1, 3, 1)
 	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
