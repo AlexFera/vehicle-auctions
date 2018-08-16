@@ -45,7 +45,7 @@
                     <h4>@lot.Vehicle.Make @lot.Vehicle.Model @lot.Vehicle.EngineCapacity @lot.Vehicle.EngineType - @lot.Vehicle.FirstRegistrationDate.Year</h4>
                 </div>
                 <div class="col-md-3">
-                    <h5>@lot.Vehicle.Mileage KM</h5>
+                    <h5>@lot.Vehicle.Mileage.ToString("N0") KM</h5>
                     <h5>@lot.Vehicle.FirstRegistrationDate.ToShortDateString()</h5>
                     <h5>@lot.Vehicle.NumberOfDoors doors</h5>
                 </div>
