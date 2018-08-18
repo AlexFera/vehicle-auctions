@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <TargetLatestAspNetCoreRuntimePatch>true</TargetLatestAspNetCoreRuntimePatch>
+  </PropertyGroup>
+
 </Project>
