@@ -29,19 +29,24 @@
             <div class="panel-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-6">Current bid:</label>
-                        <label class="col-sm-6 text-primary text-center">7500 $</label>
+                        <label class="col-sm-4 col-sm-offset-1">Current bid:</label>
+                        <label class="col-sm-4 col-sm-offset-1 text-primary text-right">7500 $</label>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-6">Your bid:</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control text-right" />
+                        <label class="col-sm-4 col-sm-offset-1">Your bid:</label>
+                        <div class="col-sm-4 col-sm-offset-1">
+                            <input type="text" class="form-control text-right" value="7600" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-6 col-sm-6">
-                            <button type="submit" class="btn btn-primary">Bid</button>
+                        <div class="col-sm-4 col-sm-offset-1"></div>
+                        <div class="col-sm-4 col-sm-offset-1">
+                            <button type="submit" class="btn btn-primary btn-lg pull-right">Bid</button>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 col-sm-offset-1">Location:</label>
+                        <label class="col-sm-6 text-info">@Model.Sale.Location.StreetAddress, @Model.Sale.Location.City, @Model.Sale.Location.Country.Name, @Model.Sale.Location.PostalCode</label>
                     </div>
                 </form>
             </div>

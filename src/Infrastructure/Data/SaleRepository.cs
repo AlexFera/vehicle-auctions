@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data
@@ -54,6 +55,35 @@ namespace Infrastructure.Data
                 p.Add("saleId", saleId);
 
                 return await sqlConnection.ExecuteScalarAsync<int>("LotCount_Get", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public async Task<Sale> GetSaleAsync(int saleId)
+        {
+            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            {
+                sqlConnection.Open();
+
+                var p = new DynamicParameters();
+                p.Add("saleId", saleId);
+
+                var sales = await sqlConnection.QueryAsync<Sale, Seller, Location, Country, Sale>("Sale_Get",
+                     map: (sale, seller, location, country) =>
+                     {
+                         sale.Seller = seller;
+                         sale.Location = location;
+                         sale.Location.Country = country;
+                         return sale;
+                     },
+                     param: p,
+                     commandType: CommandType.StoredProcedure);
+
+                foreach (var sale in sales)
+                {
+                    sale.NumberOfLots = await GetLotCountAsync(sale.Id);
+                }
+
+                return sales.FirstOrDefault();
             }
         }
     }
