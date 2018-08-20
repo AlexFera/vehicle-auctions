@@ -51,14 +51,14 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Country] AS Target
 USING (
-	VALUES (0,N'Romania','ro'),
-		(1,N'Spain','es'),
-		(2,N'Italy','it'),
-		(3,N'France','fr'),
-		(4,N'Germany','de'),
-		(5,N'United Kingdom','gb'),
-		(6,N'Portugal','pt'),
-		(7,N'Netherlands','nl')
+	VALUES (1,N'Romania','ro'),
+		(2,N'Spain','es'),
+		(3,N'Italy','it'),
+		(4,N'France','fr'),
+		(5,N'Germany','de'),
+		(6,N'United Kingdom','gb'),
+		(7,N'Portugal','pt'),
+		(8,N'Netherlands','nl')
 	) AS Source(Id, Name, Code)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -84,11 +84,11 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Location] AS Target
 USING (
-	VALUES (0,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 0),
-	(1,N'Tamworth Rd', N'DE12 7DY', N'Measham', N'Swadlincote', 5),
-	(2,N'Floßhafenstraße 5', N'41460', N'Neuss', N'Neuss', 4),
-	(3,N'Calle Oporto, 2', N'41430', N'La Luisiana', N'Sevilla', 1),
-	(4,N'Prince William Ave', N'CH5 2QZ', N'Sandycroft', N'Chester', 5)
+	VALUES (1,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 1),
+	(2,N'Tamworth Rd', N'DE12 7DY', N'Measham', N'Swadlincote', 6),
+	(3,N'Floßhafenstraße 5', N'41460', N'Neuss', N'Neuss', 5),
+	(4,N'Calle Oporto, 2', N'41430', N'La Luisiana', N'Sevilla', 2),
+	(5,N'Prince William Ave', N'CH5 2QZ', N'Sandycroft', N'Chester', 6)
 	) AS Source(Id, StreetAddress, PostalCode, City, StateOrProvince, CountryId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -190,10 +190,10 @@ WHEN NOT MATCHED BY TARGET
 
 MERGE INTO [dbo].[Seller] AS Target
 USING (
-	VALUES (0,N'Dealer Auto București', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7'),
-		(1,N'Spanish Auto Dealer', '2c46a26a-61d0-4900-9ec0-72d81aa38b84'),
-		(2,N'United Kingdom Auto Dealer', 'c5d558eb-d637-404e-9ddd-5b625fa8884d'),
-		(3,N'Germany Auto Dealer', 'b2ff5c6d-1aa7-4d81-83a5-d77bdc68c409')
+	VALUES (1,N'Dealer Auto București', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7'),
+		(2,N'Spanish Auto Dealer', '2c46a26a-61d0-4900-9ec0-72d81aa38b84'),
+		(3,N'United Kingdom Auto Dealer', 'c5d558eb-d637-404e-9ddd-5b625fa8884d'),
+		(4,N'Germany Auto Dealer', 'b2ff5c6d-1aa7-4d81-83a5-d77bdc68c409')
 	) AS Source(Id, CompanyName, UserId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -217,13 +217,38 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
+
+MERGE INTO [dbo].[Buyer] AS Target
+USING (
+	VALUES (1, '0e34a46b-3398-4ced-ab25-3a2429716819')
+	) AS Source(Id, UserId)
+	ON Target.Id = Source.Id
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET UserId = Source.UserId
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			Id
+			,UserId
+			)
+		VALUES (
+			Id
+			,UserId
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
+
+
 MERGE INTO [dbo].[Sale] AS Target
 USING (
-	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 0, 0, 1, 100),
-		(1,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 2, 4, 2, 100),
-		(2,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 2, 1, 1, 100),
-		(3,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 1, 3, 1, 100),
-		(4,N'Behörden Auktion – Vor-Ort-Auktion', '2018-08-02 16:00:00.000', '2018-11-01 16:00:00.000', 3, 2, 1, 100)
+	VALUES (1,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 1, 1, 1, 100),
+		(2,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 3, 5, 2, 100),
+		(3,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 3, 2, 1, 100),
+		(4,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 2, 4, 1, 100),
+		(5,N'Behörden Auktion – Vor-Ort-Auktion', '2018-08-02 16:00:00.000', '2018-11-01 16:00:00.000', 4, 3, 1, 100)
 	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId, BidIncrement)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -265,7 +290,7 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Lot] AS Target
 USING (
-	VALUES (0,5000, 12500, 1, 0)
+	VALUES (1,5000, 12500, 1, 1)
 	) AS Source(Id, StartPrice, ReservePrice, LotStatusId, SaleId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -297,7 +322,7 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[LotItem] AS Target
 USING (
-	VALUES (0,0)
+	VALUES (1,1)
 	) AS Source(Id, LotId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -320,7 +345,7 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Vehicle] AS Target
 USING (
-	VALUES (0,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,0,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
+	VALUES (1,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,1,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
 	) AS Source(Id,Make,Model,VIN,Color,Mileage,LotItemId,ImageUrl,FirstRegistrationDate,EngineCapacity,EngineType,NumberOfDoors,FuelType,EquipmentInterior,EquipmentExterior,EquipmentInfotainment,EquipmentEngineTechnology,VehicleSource,CurrentCountryOfRegistration,HasServiceHistory,EuroEmissionStandard,HasAccidentDamage,HasSecondKeyAvailable,TransmissionType, EnginePower)
 	ON Target.Id = Source.Id
 WHEN MATCHED

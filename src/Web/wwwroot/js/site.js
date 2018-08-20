@@ -3,7 +3,7 @@
         e.preventDefault();
         const bidAmount = $('#Lot_NextBidAmount').val();
         const lotId = $('#Lot_Id').val();
-        const saleId = $('#Lot_SaleId').val();
+        const saleId = $('#Lot_Sale_Id').val();
         const bid = { amount: bidAmount, lotId: lotId, saleId: saleId };
 
         $.ajax({
