@@ -35,6 +35,21 @@ namespace Core.Services
             return lot;
         }
 
+        public async Task<IEnumerable<Sale>> ListActiveSalesAsync()
+        {
+            return await this.saleRepository.ListActiveSalesAsync();
+        }
+
+        public async Task<IEnumerable<Lot>> ListLotsAsync(int saleId)
+        {
+            return await this.lotRepository.ListLotsAsync(saleId);
+        }
+
+        public async Task PlaceBidAsync(int lotId, decimal amount, string userName)
+        {
+            await this.bidRepository.InsertBidAsync(lotId, amount, userName);
+        }
+
         private static void SetCurrentPrice(Lot lot)
         {
             if (lot.Bids.Any())
@@ -45,16 +60,6 @@ namespace Core.Services
             {
                 lot.CurrentPrice = lot.StartPrice;
             }
-        }
-
-        public async Task<IEnumerable<Sale>> ListActiveSalesAsync()
-        {
-            return await this.saleRepository.ListActiveSalesAsync();
-        }
-
-        public async Task<IEnumerable<Lot>> ListLotsAsync(int saleId)
-        {
-            return await this.lotRepository.ListLotsAsync(saleId);
         }
     }
 }

@@ -39,5 +39,20 @@ namespace Infrastructure.Data
                 return bids;
             }
         }
+
+        public async Task InsertBidAsync(int lotId, decimal amount, string userName)
+        {
+            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            {
+                sqlConnection.Open();
+
+                var p = new DynamicParameters();
+                p.Add("@lotId", lotId);
+                p.Add("@amount", amount);
+                p.Add("@userName", userName);
+
+                await sqlConnection.ExecuteScalarAsync<int>("Bid_Insert", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }
