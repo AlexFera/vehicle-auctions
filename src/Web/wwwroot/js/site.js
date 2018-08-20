@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿$(document).ready(function () {
     $('#place-bid-button').click(function (e) {
         e.preventDefault();
         const bidAmount = $('#Lot_NextBidAmount').val();
