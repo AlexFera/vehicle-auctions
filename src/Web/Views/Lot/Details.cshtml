@@ -27,21 +27,24 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Bidding Panel</div>
             <div class="panel-body">
-                <form class="form-horizontal">
+                <form asp-controller="Lot" asp-action="Bid" class="form-horizontal" data-ajax="true" data-ajax-method="POST">
+                    <input type="hidden" asp-for="Lot.Id" />
+                    <input type="hidden" asp-for="Lot.Sale.Id" />
+
                     <div class="form-group">
-                        <label class="col-sm-4 col-sm-offset-1">Current bid:</label>
-                        <label class="col-sm-4 col-sm-offset-1 text-primary text-right">@Math.Floor(Model.Lot.CurrentPrice) €</label>
+                        <label class="col-sm-4 col-sm-offset-1">Current price:</label>
+                        <label asp-for="Lot.CurrentPrice" class="col-sm-4 col-sm-offset-1 text-primary text-right">@Math.Floor(Model.Lot.CurrentPrice) €</label>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 col-sm-offset-1">Your bid:</label>
+                        <label class="col-sm-4 col-sm-offset-1">Next bid:</label>
                         <div class="col-sm-4 col-sm-offset-1">
-                            <input type="text" class="form-control text-right" value="@Math.Floor(Model.Lot.NextBidAmount)" />
+                            <input asp-for="Lot.NextBidAmount" type="text" class="form-control text-right" value="@Math.Floor(Model.Lot.NextBidAmount)" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-1"></div>
                         <div class="col-sm-4 col-sm-offset-1">
-                            <button type="submit" class="btn btn-primary btn-lg pull-right">Bid</button>
+                            <button id="place-bid-button" type="submit" class="btn btn-primary btn-lg pull-right">Bid</button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -190,3 +193,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

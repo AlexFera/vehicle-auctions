@@ -6,6 +6,10 @@ namespace Core.Entities.LotAggregate
     {
         public int Id { get; set; }
 
+        public int LotId { get; set; }
+
+        public int SaleId { get; set; }
+
         public decimal Amount { get; set; }
 
         public DateTime PlacedDate { get; set; }
