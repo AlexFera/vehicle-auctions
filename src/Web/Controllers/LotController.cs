@@ -7,18 +7,16 @@ namespace Web.Controllers
 {
     public class LotController : Controller
     {
-        private readonly ILotRepository lotRepository;
-        private readonly ISaleRepository saleRepository;
+        private readonly IAuctionService auctionService;
 
-        public LotController(ILotRepository lotRepository, ISaleRepository saleRepository)
+        public LotController(IAuctionService auctionService)
         {
-            this.lotRepository = lotRepository;
-            this.saleRepository = saleRepository;
+            this.auctionService = auctionService;
         }
 
         public async Task<IActionResult> Search(int saleId)
         {
-            var lots = await this.lotRepository.ListLotsAsync(saleId);
+            var lots = await this.auctionService.ListLotsAsync(saleId);
             var viewModel = new LotSearchViewModel { Lots = lots, SaleId = saleId };
 
             return View(viewModel);
@@ -26,9 +24,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Details(int lotId, int saleId)
         {
-            var lot = await this.lotRepository.GetLotAsync(lotId);
-            var sale = await this.saleRepository.GetSaleAsync(saleId);
-            var viewModel = new LotDetailsViewModel { Lot = lot, Sale = sale };
+            var lot = await this.auctionService.GetLotAsync(lotId, saleId);
+            var viewModel = new LotDetailsViewModel { Lot = lot};
 
             return View(viewModel);
         }

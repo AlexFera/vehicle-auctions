@@ -19,5 +19,7 @@ namespace Core.Entities.SaleAggregate
         public Location Location { get; set; }
 
         public int NumberOfLots { get; set; }
+
+        public decimal BidIncrement { get; set; }
     }
 }

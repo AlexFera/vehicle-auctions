@@ -8,16 +8,16 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ISaleRepository saleRepository;
+        private readonly IAuctionService auctionService;
 
-        public HomeController(ISaleRepository saleRepository)
+        public HomeController(IAuctionService auctionService)
         {
-            this.saleRepository = saleRepository;
+            this.auctionService = auctionService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var activeSales = await this.saleRepository.ListActiveSalesAsync();
+            var activeSales = await this.auctionService.ListActiveSalesAsync();
             var viewModel = new SaleViewModel { ActiveSales = activeSales };
 
             return View(viewModel);

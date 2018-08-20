@@ -1,4 +1,5 @@
 ﻿using Core.Interfaces;
+using Core.Services;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -51,6 +52,8 @@ namespace Web
 
             services.AddScoped<ISaleRepository, SaleRepository>();
             services.AddScoped<ILotRepository, LotRepository>();
+            services.AddScoped<IBidRepository, BidRepository>();
+            services.AddScoped<IAuctionService, AuctionService>();
 
             var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()

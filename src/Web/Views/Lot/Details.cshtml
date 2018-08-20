@@ -30,12 +30,12 @@
                 <form class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-4 col-sm-offset-1">Current bid:</label>
-                        <label class="col-sm-4 col-sm-offset-1 text-primary text-right">7500 $</label>
+                        <label class="col-sm-4 col-sm-offset-1 text-primary text-right">@Math.Floor(Model.Lot.CurrentPrice) €</label>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 col-sm-offset-1">Your bid:</label>
                         <div class="col-sm-4 col-sm-offset-1">
-                            <input type="text" class="form-control text-right" value="7600" />
+                            <input type="text" class="form-control text-right" value="@Math.Floor(Model.Lot.NextBidAmount)" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 col-sm-offset-1">Location:</label>
-                        <label class="col-sm-6 text-info">@Model.Sale.Location.StreetAddress, @Model.Sale.Location.City, @Model.Sale.Location.Country.Name, @Model.Sale.Location.PostalCode</label>
+                        <label class="col-sm-6 text-info">@Model.Lot.Sale.Location.StreetAddress, @Model.Lot.Sale.Location.City, @Model.Lot.Sale.Location.Country.Name, @Model.Lot.Sale.Location.PostalCode</label>
                     </div>
                 </form>
             </div>

@@ -6,6 +6,7 @@ SELECT
 	,s.Name
 	,s.StartDate
 	,s.EndDate
+	,s.BidIncrement
 	,st.Value AS SaleType
 	-- Seller
 	,sl.Id

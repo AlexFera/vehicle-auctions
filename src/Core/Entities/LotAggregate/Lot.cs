@@ -1,4 +1,7 @@
-﻿namespace Core.Entities.LotAggregate
+﻿using Core.Entities.SaleAggregate;
+using System.Collections.Generic;
+
+namespace Core.Entities.LotAggregate
 {
     public class Lot
     {
@@ -11,5 +14,13 @@
         public LotStatus LotStatus { get; set; }
 
         public Vehicle Vehicle { get; set; }
+
+        public IEnumerable<Bid> Bids { get; set; }
+
+        public Sale Sale { get; set; }
+
+        public decimal CurrentPrice { get; set; }
+
+        public decimal NextBidAmount { get; set; }
     }
 }

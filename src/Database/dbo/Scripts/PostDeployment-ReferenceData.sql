@@ -219,12 +219,12 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Sale] AS Target
 USING (
-	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 0, 0, 1),
-		(1,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 2, 4, 2),
-		(2,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 2, 1, 1),
-		(3,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 1, 3, 1),
-		(4,N'Behörden Auktion – Vor-Ort-Auktion', '2018-08-02 16:00:00.000', '2018-11-01 16:00:00.000', 3, 2, 1)
-	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId)
+	VALUES (0,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 0, 0, 1, 100),
+		(1,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 2, 4, 2, 100),
+		(2,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 2, 1, 1, 100),
+		(3,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 1, 3, 1, 100),
+		(4,N'Behörden Auktion – Vor-Ort-Auktion', '2018-08-02 16:00:00.000', '2018-11-01 16:00:00.000', 3, 2, 1, 100)
+	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId, BidIncrement)
 	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
@@ -235,6 +235,7 @@ WHEN MATCHED
 			,SellerId = Source.SellerId
 			,LocationId = Source.LocationId
 			,SaleTypeId = Source.SaleTypeId
+			,BidIncrement = Source.BidIncrement
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
@@ -245,6 +246,7 @@ WHEN NOT MATCHED BY TARGET
 			,SellerId
 			,LocationId
 			,SaleTypeId
+			,BidIncrement
 			)
 		VALUES (
 			Id
@@ -254,6 +256,7 @@ WHEN NOT MATCHED BY TARGET
 			,SellerId
 			,LocationId
 			,SaleTypeId
+			,BidIncrement
 			)
 WHEN NOT MATCHED BY SOURCE
 	THEN
