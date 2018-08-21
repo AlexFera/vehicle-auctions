@@ -5,10 +5,8 @@
 @model SaleViewModel
 
 <div class="jumbotron">
-    <div class="container">
-        <h1>Welcome!</h1>
-        <p>Search for over 12 000 lots in over 120 auctions accros the entire Europe!</p>
-    </div>
+    <h1 class="display-4">Welcome!</h1>
+    <p class="lead">Search for over 12 000 lots in over 120 auctions accros the entire Europe!</p>
 </div>
 
 <hr />
@@ -33,13 +31,15 @@
                 </div>
                 <div class="col-md-4">
                     <br />
-                    <a asp-action="Search" asp-controller="Lot" asp-route-saleid="@sale.Id"><img src="~/images/sale_logo.png" /></a>
+                    <a asp-action="Search" asp-controller="Lot" asp-route-saleid="@sale.Id"><img class="img-fluid" src="~/images/sale_logo.png" /></a>
                     <a asp-action="Search" asp-controller="Lot" asp-route-saleid="@sale.Id"><h3 class="text-info">@sale.Name</h3></a>
                 </div>
                 <div class="col-md-4">
-                    <span class="label label-info">@sale.SaleType</span>
-                    <span class="label label-default">@sale.Location.City</span>
-                    <h3><span class="flag-icon flag-icon-@sale.Location.Country.Code"></span></h3>
+                    <br />
+                    <br />
+                    <span class="badge badge-primary">@sale.SaleType</span>
+                    <span class="badge badge-secondary">@sale.Location.City</span>
+                    <span class="flag-icon flag-icon-@sale.Location.Country.Code"></span>
                     <h3>@sale.NumberOfLots lots</h3>
                 </div>
             </div>

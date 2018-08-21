@@ -1,34 +1,48 @@
 ﻿@model LoginViewModel
 
 @{
-    ViewData["Title"] = "Log in";
+    Layout = null;
 }
 
-@section Styles {
-    <link href="~/css/signin.css" rel="stylesheet" />
-}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Log in</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/signin.css" rel="stylesheet">
+</head>
 
-<form asp-controller="Account" asp-action="SignIn" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-signin">
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <label asp-for="Email" class="sr-only"></label>
-    <input asp-for="Email" class="form-control" placeholder="Email address" required autofocus />
-    <span asp-validation-for="Email" class="text-danger"></span>
+<body class="text-center">
+    <form asp-controller="Account" asp-action="SignIn" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-signin">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label asp-for="Email" class="sr-only"></label>
+        <input asp-for="Email" class="form-control" placeholder="Email address" required autofocus />
+        <span asp-validation-for="Email" class="text-danger"></span>
 
-    <label asp-for="Password" class="sr-only"></label>
-    <input asp-for="Password" class="form-control" placeholder="Password" required />
-    <span asp-validation-for="Password" class="text-danger"></span>
+        <label asp-for="Password" class="sr-only"></label>
+        <input asp-for="Password" class="form-control" placeholder="Password" required />
+        <span asp-validation-for="Password" class="text-danger"></span>
 
-    <div class="checkbox">
-        <label asp-for="RememberMe">
-            <input asp-for="RememberMe" />
-            @Html.DisplayNameFor(m => m.RememberMe)
-        </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p>
-        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text">Register as a new user?</a>
-    </p>
-</form>
+        <div class="checkbox">
+            <label asp-for="RememberMe">
+                <input asp-for="RememberMe" />
+                @Html.DisplayNameFor(m => m.RememberMe)
+            </label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p>
+            <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text">Register as a new user?</a>
+        </p>
+        <p class="mt-5 mb-3 text-muted">&copy; @DateTime.Today.Year - Vehicle Auctions</p>
+    </form>
+</body>
+</html>
+
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }

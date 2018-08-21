@@ -1,33 +1,41 @@
-﻿@using Web.ViewModels.Account
+﻿@model RegisterViewModel
 
-@model RegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    Layout = null;
 }
 
-@section Styles {
-    <link href="~/css/signin.css" rel="stylesheet" />
-}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Register</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/signin.css" rel="stylesheet">
+</head>
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-signin">
-    <h2 class="form-signin-heading">Register a new account</h2>
-    <div asp-validation-summary="All" class="text-danger"></div>
+<body class="text-center">
+    <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-signin">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Register a new account</h1>
 
-    <label asp-for="Email" class="sr-only"></label>
-    <input asp-for="Email" class="form-control" placeholder="Email address" required autofocus />
-    <span asp-validation-for="Email" class="text-danger"></span>
+        <label asp-for="Email" class="sr-only"></label>
+        <input asp-for="Email" class="form-control" placeholder="Email address" required autofocus />
+        <span asp-validation-for="Email" class="text-danger"></span>
 
-    <label asp-for="Password" class="sr-only"></label>
-    <input asp-for="Password" class="form-control" placeholder="Password" required />
-    <span asp-validation-for="Password" class="text-danger"></span>
+        <label asp-for="Password" class="sr-only"></label>
+        <input asp-for="Password" class="form-control" placeholder="Password" required />
+        <span asp-validation-for="Password" class="text-danger"></span>
 
-    <label asp-for="ConfirmPassword" class="sr-only"></label>
-    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" required />
-    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <label asp-for="ConfirmPassword" class="sr-only"></label>
+        <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" required />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-</form>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}
+        <p class="mt-5 mb-3 text-muted">&copy; @DateTime.Today.Year - Vehicle Auctions</p>
+    </form>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

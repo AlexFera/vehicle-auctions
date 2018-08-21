@@ -7,9 +7,9 @@
 <br />
 
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-body">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
                 <h3>@Model.Lot.Vehicle.Make @Model.Lot.Vehicle.Model @Model.Lot.Vehicle.EngineCapacity @Model.Lot.Vehicle.EngineType @Model.Lot.Vehicle.TransmissionType @Model.Lot.Vehicle.FuelType</h3>
                 <h4>@Model.Lot.Vehicle.EnginePower, @Model.Lot.Vehicle.Mileage.ToString("N0") km, @Model.Lot.Vehicle.FirstRegistrationDate.Year</h4>
             </div>
@@ -17,39 +17,53 @@
     </div>
 </div>
 
+<br />
+
 <div class="row">
-    <div class="col-md-4 col-md-offset-2">
-        <a href="#" class="thumbnail">
-            <img src="@Model.Lot.Vehicle.ImageUrl/310">
-        </a>
+    <div class="col-md-4 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <a href="#" class="thumbnail">
+                    <img class="img-fluid rounded" src="@Model.Lot.Vehicle.ImageUrl/310">
+                </a>
+            </div>
+        </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Bidding Panel</div>
-            <div class="panel-body">
-                <form asp-controller="Lot" asp-action="Bid" class="form-horizontal" data-ajax="true" data-ajax-method="POST">
+        <div class="card">
+            <div class="card-header text-center text-primary font-weight-bold">Bidding Panel</div>
+            <div class="card-body">
+                <form asp-controller="Lot" asp-action="Bid" data-ajax="true" data-ajax-method="POST">
                     <input type="hidden" asp-for="Lot.Id" />
                     <input type="hidden" asp-for="Lot.Sale.Id" />
-
-                    <div class="form-group">
-                        <label class="col-sm-4 col-sm-offset-1">Current price:</label>
-                        <label asp-for="Lot.CurrentPrice" class="col-sm-4 col-sm-offset-1 text-primary text-right">@Math.Floor(Model.Lot.CurrentPrice) €</label>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <label>Current price:</label>
+                        </div>
+                        <div class="col">
+                            <input asp-for="Lot.CurrentPrice" type="text" readonly class="form-control-plaintext text-primary text-right" value="@Math.Floor(Model.Lot.CurrentPrice) €">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 col-sm-offset-1">Next bid:</label>
-                        <div class="col-sm-4 col-sm-offset-1">
+                    <div class="form-row">
+                        <div class="col-7">
+                            <label>Next bid:</label>
+                        </div>
+                        <div class="col">
                             <input asp-for="Lot.NextBidAmount" type="text" class="form-control text-right" value="@Math.Floor(Model.Lot.NextBidAmount)" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-1"></div>
-                        <div class="col-sm-4 col-sm-offset-1">
-                            <button id="place-bid-button" type="submit" class="btn btn-primary btn-lg pull-right">Bid</button>
+                    <div class="form-row">
+                        <div class="col">
+                            <button id="place-bid-button" type="submit" class="btn btn-primary btn-lg">Bid</button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 col-sm-offset-1">Location:</label>
-                        <label class="col-sm-6 text-info">@Model.Lot.Sale.Location.StreetAddress, @Model.Lot.Sale.Location.City, @Model.Lot.Sale.Location.Country.Name, @Model.Lot.Sale.Location.PostalCode</label>
+                    <div class="form-row">
+                        <div class="col-3">
+                            <label>Location:</label>
+                        </div>
+                        <div class="col">
+                            <label class="text-info">@Model.Lot.Sale.Location.StreetAddress, @Model.Lot.Sale.Location.City, @Model.Lot.Sale.Location.Country.Name, @Model.Lot.Sale.Location.PostalCode</label>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -57,12 +71,14 @@
     </div>
 </div>
 
+<br />
+
 <div class="row">
-    <div class="col-md-4 col-md-offset-2">
-        <div class="panel panel-default">
+    <div class="col-md-4 offset-md-2">
+        <div class="card">
             <!-- Default panel contents -->
-            <div class="panel-heading">Key information</div>
-            <table class="table-condensed">
+            <div class="card-header font-weight-bold">Key information</div>
+            <table class="table table-borderless">
                 <tr>
                     <td>VIN Number</td>
                     <td>@Model.Lot.Vehicle.VIN</td>
@@ -91,10 +107,10 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default">
+        <div class="card">
             <!-- Default panel contents -->
-            <div class="panel-heading">Interior</div>
-            <table class="table-condensed">
+            <div class="card-header font-weight-bold">Interior</div>
+            <table class="table table-borderless">
                 @{
                     var interiorItems = Model.Lot.Vehicle.EquipmentInterior.Split('|');
                     foreach (var interiorItem in interiorItems)
@@ -109,12 +125,14 @@
     </div>
 </div>
 
+<br />
+
 <div class="row">
-    <div class="col-md-4 col-md-offset-2">
-        <div class="panel panel-default">
+    <div class="col-md-4 offset-md-2">
+        <div class="card">
             <!-- Default panel contents -->
-            <div class="panel-heading">Infotainment</div>
-            <table class="table-condensed">
+            <div class="card-header font-weight-bold">Infotainment</div>
+            <table class="table table-borderless">
                 @{
                     var InfotainmentItems = Model.Lot.Vehicle.EquipmentInfotainment.Split('|');
                     foreach (var InfotainmentItem in InfotainmentItems)
@@ -128,10 +146,10 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default">
+        <div class="card">
             <!-- Default panel contents -->
-            <div class="panel-heading">Engine & Technology</div>
-            <table class="table-condensed">
+            <div class="card-header font-weight-bold">Engine & Technology</div>
+            <table class="table table-borderless">
                 @{
                     var engineItems = Model.Lot.Vehicle.EquipmentEngineTechnology.Split('|');
                     foreach (var engineItem in engineItems)
@@ -146,12 +164,14 @@
     </div>
 </div>
 
+<br />
+
 <div class="row">
-    <div class="col-md-4 col-md-offset-2">
-        <div class="panel panel-default">
+    <div class="col-md-4 offset-md-2">
+        <div class="card">
             <!-- Default panel contents -->
-            <div class="panel-heading">Exterior</div>
-            <table class="table-condensed">
+            <div class="card-header font-weight-bold">Exterior</div>
+            <table class="table table-borderless">
                 @{
                     var exteriorItems = Model.Lot.Vehicle.EquipmentExterior.Split('|');
                     foreach (var exteriorItem in exteriorItems)
@@ -165,10 +185,10 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default">
+        <div class="card">
             <!-- Default panel contents -->
-            <div class="panel-heading">Additional Information</div>
-            <table class="table-condensed">
+            <div class="card-header font-weight-bold">Additional Information</div>
+            <table class="table table-borderless">
                 <tr>
                     <td>Vehicle Source</td>
                     <td>@Model.Lot.Vehicle.VehicleSource</td>
@@ -193,7 +213,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}
