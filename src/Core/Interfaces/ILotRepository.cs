@@ -8,6 +8,8 @@ namespace Core.Interfaces
     {
         Task<IEnumerable<Lot>> ListLotsAsync(int saleId);
 
+        Task<IEnumerable<Lot>> ListLotsAsync();
+
         Task<Lot> GetLotAsync(int lotId);
     }
 }

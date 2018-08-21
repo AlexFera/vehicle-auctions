@@ -42,6 +42,25 @@ namespace Infrastructure.Data
             }
         }
 
+        public async Task<IEnumerable<Lot>> ListLotsAsync()
+        {
+            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            {
+                sqlConnection.Open();
+
+                var lots = await sqlConnection.QueryAsync<Lot, Vehicle, Lot>("Lot_List",
+                    map: (lot, vehicle) =>
+                    {
+                        lot.Vehicle = vehicle;
+
+                        return lot;
+                    },
+                    commandType: CommandType.StoredProcedure);
+
+                return lots;
+            }
+        }
+
         public async Task<Lot> GetLotAsync(int lotId)
         {
             using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))

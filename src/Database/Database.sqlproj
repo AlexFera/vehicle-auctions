@@ -99,6 +99,7 @@
     <Build Include="dbo\Stored Procedures\Sale_Get.sql" />
     <Build Include="dbo\Stored Procedures\Bid_ListByLotId.sql" />
     <Build Include="dbo\Stored Procedures\Bid_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Lot_List.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />

@@ -4,6 +4,7 @@ using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Web.Hubs;
 using Web.ViewModels;
@@ -26,10 +27,10 @@ namespace Web.Controllers
             this.biddingHubContext = biddingHubContext;
         }
 
-        public async Task<IActionResult> Search(int saleId)
+        public async Task<IActionResult> Search(int? saleId)
         {
             var lots = await this.auctionService.ListLotsAsync(saleId);
-            var viewModel = new LotSearchViewModel { Lots = lots, SaleId = saleId };
+            var viewModel = new LotSearchViewModel { Lots = lots };
 
             return View(viewModel);
         }

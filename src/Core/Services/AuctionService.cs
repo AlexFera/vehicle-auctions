@@ -40,14 +40,27 @@ namespace Core.Services
             return await this.saleRepository.ListActiveSalesAsync();
         }
 
-        public async Task<IEnumerable<Lot>> ListLotsAsync(int saleId)
+        public async Task<IEnumerable<Lot>> ListLotsAsync(int? saleId)
         {
-            return await this.lotRepository.ListLotsAsync(saleId);
+            if (saleId.HasValue)
+            {
+                return await this.lotRepository.ListLotsAsync(saleId.Value);
+            }
+            else
+            {
+                return await this.lotRepository.ListLotsAsync();
+            }
+
         }
 
         public async Task PlaceBidAsync(int lotId, decimal amount, string userName)
         {
             await this.bidRepository.InsertBidAsync(lotId, amount, userName);
+        }
+
+        public async Task<IEnumerable<Lot>> ListLotsAsync()
+        {
+            return await this.lotRepository.ListLotsAsync();
         }
 
         private static void SetCurrentPrice(Lot lot)

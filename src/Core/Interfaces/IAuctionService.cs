@@ -9,7 +9,9 @@ namespace Core.Interfaces
     {
         Task<IEnumerable<Sale>> ListActiveSalesAsync();
 
-        Task<IEnumerable<Lot>> ListLotsAsync(int saleId);
+        Task<IEnumerable<Lot>> ListLotsAsync(int? saleId);
+
+        Task<IEnumerable<Lot>> ListLotsAsync();
 
         Task<Lot> GetLotAsync(int lotId, int saleId);
 

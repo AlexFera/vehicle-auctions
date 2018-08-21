@@ -15,6 +15,8 @@ namespace Core.Entities.LotAggregate
 
         public Vehicle Vehicle { get; set; }
 
+        public int SaleId { get; set; }
+
         public IEnumerable<Bid> Bids { get; set; }
 
         public Sale Sale { get; set; }

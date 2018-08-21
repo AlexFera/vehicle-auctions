@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Lot_ListBySaleId] @saleId INT
+﻿CREATE PROCEDURE [dbo].[Lot_List]
 AS
 SELECT TOP (1000) l.Id
 	,l.StartPrice
@@ -34,5 +34,3 @@ FROM [dbo].[Lot] l
 INNER JOIN [dbo].[LotStatus] ls ON l.LotStatusId = ls.Id
 INNER JOIN [dbo].[LotItem] li ON l.Id = li.LotId
 INNER JOIN [dbo].[Vehicle] v ON li.Id = v.LotItemId
-WHERE l.SaleId = @saleId
-
