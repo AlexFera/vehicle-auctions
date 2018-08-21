@@ -14,5 +14,6 @@ FROM [dbo].[Bid] b WITH (NOLOCK)
 INNER JOIN [dbo].[Buyer] bu WITH (NOLOCK) ON b.BuyerId = bu.Id
 INNER JOIN [dbo].[AspNetUsers] anu WITH (NOLOCK) ON bu.UserId = anu.Id
 INNER JOIN [dbo].[Lot] l WITH (NOLOCK) ON b.LotId = l.Id
+WHERE b.LotId = @lotId
 ORDER BY b.Id
 

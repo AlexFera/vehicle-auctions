@@ -217,10 +217,12 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
-
 MERGE INTO [dbo].[Buyer] AS Target
 USING (
-	VALUES (1, '0e34a46b-3398-4ced-ab25-3a2429716819')
+	VALUES (1, '0e34a46b-3398-4ced-ab25-3a2429716819'),
+		(2, '485026b8-54c6-4b42-82da-1e3ac2ab8a9f'),
+		(3, '9e09aa8d-59f3-490c-a3f4-66570539e201'),
+		(4, 'bac3056f-bb6d-49e4-906a-1efd5521c9ce')
 	) AS Source(Id, UserId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -240,7 +242,6 @@ WHEN NOT MATCHED BY TARGET
 WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
-
 
 MERGE INTO [dbo].[Sale] AS Target
 USING (
@@ -287,10 +288,11 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
-
 MERGE INTO [dbo].[Lot] AS Target
 USING (
-	VALUES (1,5000, 12500, 1, 1)
+	VALUES (1,5000, 12500, 1, 1),
+		(2,6000, 11500, 1, 1),
+		(3,6000, 13000, 1, 1)
 	) AS Source(Id, StartPrice, ReservePrice, LotStatusId, SaleId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -322,7 +324,9 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[LotItem] AS Target
 USING (
-	VALUES (1,1)
+	VALUES (1,1),
+		(2,2),
+		(3,3)
 	) AS Source(Id, LotId)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -345,7 +349,9 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Vehicle] AS Target
 USING (
-	VALUES (1,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,1,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
+	VALUES (1,N'Mercedes-Benz',N'B',N'WDD2462121N128081',N'Silver Metallic',122213,1,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/DE/1500050433/154335076',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+		(2,N'Dacia',N'Lodgy',N'WDD2462121N128081',N'Grey',73548,2,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/ES/2489HLN/153888670',N'2015-06-01',1.5,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+		(3,N'Seat',N'Ibiza',N'VSSZZZ6LZ8R029363',N'White',130386,3,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/ES/4860FTR/153670645',N'2015-06-01',1.4,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
 	) AS Source(Id,Make,Model,VIN,Color,Mileage,LotItemId,ImageUrl,FirstRegistrationDate,EngineCapacity,EngineType,NumberOfDoors,FuelType,EquipmentInterior,EquipmentExterior,EquipmentInfotainment,EquipmentEngineTechnology,VehicleSource,CurrentCountryOfRegistration,HasServiceHistory,EuroEmissionStandard,HasAccidentDamage,HasSecondKeyAvailable,TransmissionType, EnginePower)
 	ON Target.Id = Source.Id
 WHEN MATCHED

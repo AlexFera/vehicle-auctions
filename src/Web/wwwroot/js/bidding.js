@@ -7,13 +7,22 @@ connection.start().catch(function (err) {
 });
 
 connection.on("ReceiveMessage", function (user, message) {
-    toastr.options.escapeHtml = true;
-    toastr.options.closeButton = true;
-    toastr.options.preventDuplicates = true;
-    toastr.options.positionClass = 'toast-top-center';
+    const lotId = Number(getParameterByName('lotId'));
+    const messageLotId = Number(message.id);
 
-    toastr.info("A new bid placed!");
+    if (lotId === messageLotId) {
+        toastr.options.escapeHtml = true;
+        toastr.options.closeButton = true;
+        toastr.options.preventDuplicates = true;
+        toastr.options.positionClass = 'toast-top-center';
 
-    $('#Lot_CurrentPrice').val(message.currentPrice);
-    $('#Lot_NextBidAmount').val(message.nextBidAmount);
+        toastr.info("A new bid placed!");
+
+        $('#Lot_CurrentPrice').fadeOut(500, function () {
+            $(this).val(message.currentPrice + ' €').fadeIn(500);
+        });
+        $('#Lot_NextBidAmount').fadeOut(500, function () {
+            $(this).val(message.nextBidAmount).fadeIn(500);
+        });
+    }
 });

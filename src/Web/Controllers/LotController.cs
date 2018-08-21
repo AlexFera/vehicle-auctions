@@ -49,7 +49,7 @@ namespace Web.Controllers
             await this.auctionService.PlaceBidAsync(bid.LotId, bid.Amount, user.UserName);
             var lot = await this.auctionService.GetLotAsync(bid.LotId, bid.SaleId);
 
-            await this.biddingHubContext.Clients.All.SendAsync("ReceiveMessage", user.UserName, new { lot.CurrentPrice, lot.NextBidAmount });
+            await this.biddingHubContext.Clients.All.SendAsync("ReceiveMessage", user.UserName, new { lot.CurrentPrice, lot.NextBidAmount, lot.Id });
 
             return Json(new { lot.CurrentPrice, lot.NextBidAmount });
         }
