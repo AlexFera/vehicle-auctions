@@ -4,6 +4,10 @@
 
 @model LotDetailsViewModel
 
+@section styles {
+    <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+}
+
 <br />
 
 <div class="row">
@@ -77,7 +81,7 @@
     <div class="col-md-4 offset-md-2">
         <div class="card">
             <!-- Default panel contents -->
-            <div class="card-header font-weight-bold">Key information</div>
+            <div class="card-header text-center font-weight-bold">Key information</div>
             <table class="table table-borderless">
                 <tr>
                     <td>VIN Number</td>
@@ -109,7 +113,7 @@
     <div class="col-md-4">
         <div class="card">
             <!-- Default panel contents -->
-            <div class="card-header font-weight-bold">Interior</div>
+            <div class="card-header text-center font-weight-bold">Interior</div>
             <table class="table table-borderless">
                 @{
                     var interiorItems = Model.Lot.Vehicle.EquipmentInterior.Split('|');
@@ -131,7 +135,7 @@
     <div class="col-md-4 offset-md-2">
         <div class="card">
             <!-- Default panel contents -->
-            <div class="card-header font-weight-bold">Infotainment</div>
+            <div class="card-header text-center font-weight-bold">Infotainment</div>
             <table class="table table-borderless">
                 @{
                     var InfotainmentItems = Model.Lot.Vehicle.EquipmentInfotainment.Split('|');
@@ -148,7 +152,7 @@
     <div class="col-md-4">
         <div class="card">
             <!-- Default panel contents -->
-            <div class="card-header font-weight-bold">Engine & Technology</div>
+            <div class="card-header text-center font-weight-bold">Engine & Technology</div>
             <table class="table table-borderless">
                 @{
                     var engineItems = Model.Lot.Vehicle.EquipmentEngineTechnology.Split('|');
@@ -170,7 +174,7 @@
     <div class="col-md-4 offset-md-2">
         <div class="card">
             <!-- Default panel contents -->
-            <div class="card-header font-weight-bold">Exterior</div>
+            <div class="card-header text-center font-weight-bold">Exterior</div>
             <table class="table table-borderless">
                 @{
                     var exteriorItems = Model.Lot.Vehicle.EquipmentExterior.Split('|');
@@ -187,7 +191,7 @@
     <div class="col-md-4">
         <div class="card">
             <!-- Default panel contents -->
-            <div class="card-header font-weight-bold">Additional Information</div>
+            <div class="card-header text-center font-weight-bold">Additional Information</div>
             <table class="table table-borderless">
                 <tr>
                     <td>Vehicle Source</td>
@@ -213,3 +217,8 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/lib/toastr/toastr.min.js"></script>
+    <script src="~/js/bidding.js"></script>
+}

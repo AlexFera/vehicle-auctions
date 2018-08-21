@@ -3,7 +3,9 @@ using Core.Interfaces;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using Web.Hubs;
 using Web.ViewModels;
 
 namespace Web.Controllers
@@ -12,13 +14,16 @@ namespace Web.Controllers
     {
         private readonly IAuctionService auctionService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHubContext<BiddingHub> biddingHubContext;
 
         public LotController(
             IAuctionService auctionService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IHubContext<BiddingHub> biddingHubContext)
         {
             this.auctionService = auctionService;
             this.userManager = userManager;
+            this.biddingHubContext = biddingHubContext;
         }
 
         public async Task<IActionResult> Search(int saleId)
@@ -43,6 +48,8 @@ namespace Web.Controllers
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
             await this.auctionService.PlaceBidAsync(bid.LotId, bid.Amount, user.UserName);
             var lot = await this.auctionService.GetLotAsync(bid.LotId, bid.SaleId);
+
+            await this.biddingHubContext.Clients.All.SendAsync("ReceiveMessage", user.UserName, new { lot.CurrentPrice, lot.NextBidAmount });
 
             return Json(new { lot.CurrentPrice, lot.NextBidAmount });
         }

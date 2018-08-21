@@ -13,8 +13,6 @@
             dataType: "json",
             data: JSON.stringify(bid),
             success: function (result) {
-                $('#Lot_CurrentPrice').val(result.currentPrice);
-                $('#Lot_NextBidAmount').val(result.nextBidAmount);
             }
         });
     });

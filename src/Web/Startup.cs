@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Web.Hubs;
 
 namespace Web
 {
@@ -61,6 +62,8 @@ namespace Web
 
             services.AddMvc(config => config.Filters.Add(new AuthorizeFilter(requireAuthenticatedUserPolicy))).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddSignalR();
+
             this.services = services;
         }
 
@@ -93,6 +96,10 @@ namespace Web
             app.UseStaticFiles();
             app.UseAuthentication();
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<BiddingHub>("/biddingHub");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
