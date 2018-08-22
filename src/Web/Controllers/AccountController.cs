@@ -62,7 +62,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SignOut()
         {
-            await signInManager.SignOutAsync().ConfigureAwait(false);
+            await signInManager.SignOutAsync();
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
@@ -81,11 +81,10 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await userManager.CreateAsync(user, model.Password).ConfigureAwait(false);
+                var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await signInManager.SignInAsync(user, isPersistent: false).ConfigureAwait(false);
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction(nameof(SignIn), new { ReturnUrl = returnUrl });
                 }
                 AddErrors(result);
             }
@@ -101,12 +100,12 @@ namespace Web.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            var user = await userManager.FindByIdAsync(userId).ConfigureAwait(false);
+            var user = await userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
-            var result = await userManager.ConfirmEmailAsync(user, code).ConfigureAwait(false);
+            var result = await userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
