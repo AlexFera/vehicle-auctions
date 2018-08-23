@@ -53,9 +53,14 @@ namespace Core.Services
 
         }
 
-        public async Task PlaceBidAsync(int lotId, decimal amount, string userName)
+        public async Task PlaceBidAsync(int lotId, decimal amount, string userName, int saleId)
         {
-            await this.bidRepository.InsertBidAsync(lotId, amount, userName);
+            var lot = await this.GetLotAsync(lotId, saleId);
+
+            if (amount > lot.CurrentPrice)
+            {
+                await this.bidRepository.InsertBidAsync(lotId, amount, userName);
+            }
         }
 
         public async Task<IEnumerable<Lot>> ListLotsAsync()

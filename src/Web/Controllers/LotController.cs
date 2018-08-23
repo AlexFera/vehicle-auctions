@@ -44,15 +44,15 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Bid([FromBody] Bid bid)
+        public async Task<EmptyResult> Bid([FromBody] Bid bid)
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-            await this.auctionService.PlaceBidAsync(bid.LotId, bid.Amount, user.UserName);
+            await this.auctionService.PlaceBidAsync(bid.LotId, bid.Amount, user.UserName, bid.SaleId);
             var lot = await this.auctionService.GetLotAsync(bid.LotId, bid.SaleId);
 
             await this.biddingHubContext.Clients.All.SendAsync("ReceiveMessage", user.UserName, new { lot.CurrentPrice, lot.NextBidAmount, lot.Id });
 
-            return Json(new { lot.CurrentPrice, lot.NextBidAmount });
+            return new EmptyResult();
         }
     }
 }

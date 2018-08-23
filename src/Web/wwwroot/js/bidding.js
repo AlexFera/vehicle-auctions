@@ -16,7 +16,7 @@ connection.on("ReceiveMessage", function (user, message) {
         toastr.options.preventDuplicates = true;
         toastr.options.positionClass = 'toast-top-center';
 
-        toastr.info("A new bid placed!");
+        toastr.info("A new bid has been placed!");
 
         $('#Lot_CurrentPrice').fadeOut(500, function () {
             $(this).val(message.currentPrice + ' €').fadeIn(500);

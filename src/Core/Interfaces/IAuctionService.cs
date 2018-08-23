@@ -15,6 +15,6 @@ namespace Core.Interfaces
 
         Task<Lot> GetLotAsync(int lotId, int saleId);
 
-        Task PlaceBidAsync(int lotId, decimal amount, string userName);
+        Task PlaceBidAsync(int lotId, decimal amount, string userName, int saleId);
     }
 }

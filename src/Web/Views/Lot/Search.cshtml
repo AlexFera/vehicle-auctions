@@ -36,7 +36,7 @@
         <div class="col-md-12" align="center">
             <div class="row">
                 <div class="col-md-3">
-                    <a asp-action="Details" asp-controller="Lot" asp-route-lotId="@lot.Id">
+                    <a asp-action="Details" asp-controller="Lot" asp-route-lotId="@lot.Id" asp-route-saleId="@lot.SaleId">
                         <img src="@lot.Vehicle.ImageUrl/100" class="img-thumbnail img-fluid">
                     </a>
                 </div>
