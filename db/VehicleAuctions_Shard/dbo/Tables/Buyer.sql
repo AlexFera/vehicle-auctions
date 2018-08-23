@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Buyer] (
+    [Id] INT NOT NULL,
+    [UserId]  NVARCHAR(450) NOT NULL,
+    CONSTRAINT [PK_Buyer] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+

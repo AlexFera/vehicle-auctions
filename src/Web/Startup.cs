@@ -33,7 +33,7 @@ namespace Web
         {
             // Add Identity DbContext
             services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("MainConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(config => { config.SignIn.RequireConfirmedEmail = true; })
               .AddEntityFrameworkStores<AppIdentityDbContext>()
