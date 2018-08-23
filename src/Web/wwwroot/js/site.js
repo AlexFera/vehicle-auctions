@@ -27,3 +27,18 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+$(function () {
+    $('#searchString').keyup(function () {
+        const val = $(this).val().toLowerCase();
+        $('div#vehicle-list div#vehicle').hide();
+        $('div#vehicle-list div#vehicle').each(function () {
+            var text = $(this).text().toLowerCase();
+            if (text.indexOf(val) !== -1) {
+                $(this).show();
+                const numberOfResults = $('div#vehicle').not(':hidden').length;
+                $('#result-count').text(numberOfResults);
+            }
+        });
+    });
+});

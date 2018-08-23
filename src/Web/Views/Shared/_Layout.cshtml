@@ -25,8 +25,8 @@
                     <li class="nav-item" is-active-route asp-controller="Home" asp-action="Index">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item" is-active-route asp-controller="Lot" asp-action="Search">
-                        <a class="nav-link" asp-controller="Lot" asp-action="Search">Search</a>
+                    <li class="nav-item" is-active-route asp-controller="Lot" asp-action="List">
+                        <a class="nav-link" asp-controller="Lot" asp-action="List">Search</a>
                     </li>
                     <li class="nav-item" is-active-route asp-controller="Home" asp-action="About">
                         <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
@@ -42,7 +42,6 @@
 
     <main class="container" role="main">
         @RenderBody()
-        <hr />
     </main>
 
     <footer class="container">
