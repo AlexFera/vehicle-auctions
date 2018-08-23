@@ -4,15 +4,13 @@
 AS
 INSERT INTO [dbo].[Bid] (
 	LotId
-	,BuyerId
+	,BuyerUserName
 	,Amount
 	,PlacedDate
 	)
 SELECT @lotId
-	,bu.Id
+	,@userName
 	,@amount
 	,GETUTCDATE()
-FROM [dbo].[AspNetUsers] anu
-INNER JOIN [dbo].[Buyer] bu ON anu.Id = bu.UserId
-WHERE ISNULL([anu].[UserName], '') = @userName
+	
 

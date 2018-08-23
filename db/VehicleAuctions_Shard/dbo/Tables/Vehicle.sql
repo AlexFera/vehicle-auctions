@@ -24,7 +24,9 @@
     [HasSecondKeyAvailable] BIT NOT NULL, 
     [TransmissionType] VARCHAR(50) NOT NULL, 
     [EnginePower] VARCHAR(50) NOT NULL, 
+    [CountryId] INT NOT NULL, 
     CONSTRAINT [PK_Vehicle] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_Vehicle_LotItem] FOREIGN KEY ([LotItemId]) REFERENCES [dbo].[LotItem] ([Id])
+    CONSTRAINT [FK_Vehicle_LotItem] FOREIGN KEY ([LotItemId]) REFERENCES [dbo].[LotItem] ([Id]),
+	CONSTRAINT [FK_Vehicle_Country] FOREIGN KEY ([CountryId]) REFERENCES [Country]([Id])
 );
 
