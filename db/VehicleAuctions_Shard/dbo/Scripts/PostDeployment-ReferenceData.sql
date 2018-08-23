@@ -122,30 +122,31 @@ WHEN NOT MATCHED BY SOURCE
 		DELETE;
 
 
+/* User Server property to insert data on the appropiate shards
 MERGE INTO [dbo].[Seller] AS Target
 USING (
-	VALUES (1,N'Dealer Auto București', 'e5c0cb0d-2d45-4bf7-b98e-c05171c3b7c7'),
-		(2,N'Spanish Auto Dealer', '2c46a26a-61d0-4900-9ec0-72d81aa38b84'),
-		(3,N'United Kingdom Auto Dealer', 'c5d558eb-d637-404e-9ddd-5b625fa8884d'),
-		(4,N'Germany Auto Dealer', 'b2ff5c6d-1aa7-4d81-83a5-d77bdc68c409')
-	) AS Source(Id, CompanyName, UserId)
+	VALUES (1,N'Dealer Auto București', 'vendor-romania@mailinator.com', 1),
+		(2,N'Spanish Auto Dealer', 'vendor-spain@mailinator.com', 2),
+		(3,N'United Kingdom Auto Dealer', 'vendor-united-kingdom@mailinator.com', 8),
+		(4,N'Germany Auto Dealer', 'vendor-germany@mailinator.com', 4)
+	) AS Source(Id, CompanyName, UserName)
 	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
 		SET CompanyName = Source.CompanyName
-			,UserId = Source.UserId
+			,UserName = Source.UserName
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
 			Id
 			,CompanyName
-			,UserId
+			,UserName
 			)
 		VALUES (
 			Id
 			,CompanyName
-			,UserId
+			,UserName
 			)
 WHEN NOT MATCHED BY SOURCE
 	THEN
@@ -153,25 +154,25 @@ WHEN NOT MATCHED BY SOURCE
 
 MERGE INTO [dbo].[Buyer] AS Target
 USING (
-	VALUES (1, '0e34a46b-3398-4ced-ab25-3a2429716819'),
-		(2, '485026b8-54c6-4b42-82da-1e3ac2ab8a9f'),
-		(3, '9e09aa8d-59f3-490c-a3f4-66570539e201'),
-		(4, 'bac3056f-bb6d-49e4-906a-1efd5521c9ce')
-	) AS Source(Id, UserId)
+	VALUES (1, 'alex@mailinator.com'),
+		(2, 'gabriela@mailinator.com'),
+		(3, 'tom@mailinator.com'),
+		(4, 'andreea@mailinator.com')
+	) AS Source(Id, UserName)
 	ON Target.Id = Source.Id
 WHEN MATCHED
 	THEN
 		UPDATE
-		SET UserId = Source.UserId
+		SET UserName = Source.UserName
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
 			Id
-			,UserId
+			,UserName
 			)
 		VALUES (
 			Id
-			,UserId
+			,UserName
 			)
 WHEN NOT MATCHED BY SOURCE
 	THEN
@@ -395,3 +396,4 @@ WHEN NOT MATCHED BY TARGET
 WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
+		*/
