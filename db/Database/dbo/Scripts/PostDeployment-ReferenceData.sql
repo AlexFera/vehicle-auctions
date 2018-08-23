@@ -56,9 +56,9 @@ USING (
 		(3,N'Italy','it'),
 		(4,N'France','fr'),
 		(5,N'Germany','de'),
-		(6,N'United Kingdom','gb'),
-		(7,N'Portugal','pt'),
-		(8,N'Netherlands','nl')
+		(6,N'Portugal','pt'),
+		(7,N'Netherlands','nl'),
+		(8,N'United Kingdom','gb')
 	) AS Source(Id, Name, Code)
 	ON Target.Id = Source.Id
 WHEN MATCHED
@@ -85,10 +85,10 @@ WHEN NOT MATCHED BY SOURCE
 MERGE INTO [dbo].[Location] AS Target
 USING (
 	VALUES (1,N'Bulevardul Iuliu Maniu, 61', N'061083', N'București', N'București', 1),
-	(2,N'Tamworth Rd', N'DE12 7DY', N'Measham', N'Swadlincote', 6),
+	(2,N'Tamworth Rd', N'DE12 7DY', N'Measham', N'Swadlincote', 8),
 	(3,N'Floßhafenstraße 5', N'41460', N'Neuss', N'Neuss', 5),
 	(4,N'Calle Oporto, 2', N'41430', N'La Luisiana', N'Sevilla', 2),
-	(5,N'Prince William Ave', N'CH5 2QZ', N'Sandycroft', N'Chester', 6)
+	(5,N'Prince William Ave', N'CH5 2QZ', N'Sandycroft', N'Chester', 8)
 	) AS Source(Id, StreetAddress, PostalCode, City, StateOrProvince, CountryId)
 	ON Target.Id = Source.Id
 WHEN MATCHED

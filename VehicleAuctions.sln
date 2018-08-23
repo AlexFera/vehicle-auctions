@@ -19,12 +19,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "tests\I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests", "tests\FunctionalTests\FunctionalTests.csproj", "{204954E0-6E29-49C1-9284-889818F1EE88}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "src\Database\Database.sqlproj", "{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "db\Database\Database.sqlproj", "{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99936B94-8103-4AE6-9D5F-5A45E75EBA6D}"
 	ProjectSection(SolutionItems) = preProject
 		VehicleAuctions.ruleset = VehicleAuctions.ruleset
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{6A74FF7A-341A-4254-8BB7-44DA4430BFB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,7 +75,7 @@ Global
 		{014962E5-CFC7-4C2B-9A5F-D71EAA6F7A3C} = {6B3DA030-70FD-4BBF-A330-6038109A8DE9}
 		{93379B3C-6847-4398-90CF-88D90501FFFA} = {6B3DA030-70FD-4BBF-A330-6038109A8DE9}
 		{204954E0-6E29-49C1-9284-889818F1EE88} = {6B3DA030-70FD-4BBF-A330-6038109A8DE9}
-		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261} = {36FD6FA8-0F8F-4D39-BFC5-FF7C6F2B2DB5}
+		{0BDBBBDF-F574-4E27-9FA5-1159A2EC3261} = {6A74FF7A-341A-4254-8BB7-44DA4430BFB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {678CD743-4226-416D-8B69-69A23FE2EAA1}
