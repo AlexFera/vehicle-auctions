@@ -5,6 +5,7 @@ using Dapper;
 using Interfaces;
 using Microsoft.Azure.SqlDatabase.ElasticScale.Query;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -42,18 +43,16 @@ namespace Infrastructure.Data
 	                    ,s.StartDate
 	                    ,s.EndDate
 	                    ,s.BidIncrement
+                        ,s.CountryId
 	                    ,st.Value AS SaleType
 	                    -- Seller
-	                    ,sl.Id
 	                    ,sl.CompanyName
 	                    -- Location
-	                    ,l.Id
 	                    ,l.StreetAddress
 	                    ,l.PostalCode
 	                    ,l.City
 	                    ,l.StateOrProvince
 	                    -- Country
-	                    ,c.Id
 	                    ,c.Code
 	                    ,c.Name
                     FROM [dbo].[Sale] s WITH (NOLOCK)
@@ -67,22 +66,36 @@ namespace Infrastructure.Data
 
                 multiShardCommand.CommandTimeout = 30;
 
+                var sales = new List<Sale>();
+
                 // Execute the command. 
                 // We do not need to specify retry logic because MultiShardDataReader will internally retry until the CommandTimeout expires.
                 using (var reader = await multiShardCommand.ExecuteReaderAsync())
                 {
-                    int rows = 0;
                     while (await reader.ReadAsync())
                     {
-                        // Read the values using standard DbDataReader methods
-                        object[] values = new object[reader.FieldCount];
-                        reader.GetValues(values);
+                        var columnIndex = 0;
+                        var sale = new Sale { Seller = new Seller(), Location = new Location { Country = new Country() } };
+                        sale.Id = reader.GetInt32(columnIndex++);
+                        sale.Name = reader.GetString(columnIndex++);
+                        sale.StartDate = reader.GetDateTime(columnIndex++);
+                        sale.EndDate = reader.GetDateTime(columnIndex++);
+                        sale.BidIncrement = reader.GetDecimal(columnIndex++);
+                        sale.CountryId = reader.GetInt32(columnIndex++);
+                        sale.SaleType = (SaleType)Enum.Parse(typeof(SaleType), reader.GetString(columnIndex++));
+                        sale.Seller.CompanyName = reader.GetString(columnIndex++);
+                        sale.Location.StreetAddress = reader.GetString(columnIndex++);
+                        sale.Location.PostalCode = reader.GetString(columnIndex++);
+                        sale.Location.City = reader.GetString(columnIndex++);
+                        sale.Location.StateOrProvince = reader.GetString(columnIndex++);
+                        sale.Location.Country.Code = reader.GetString(columnIndex++);
+                        sale.Location.Country.Name = reader.GetString(columnIndex++);
 
-                        rows++;
+                        sales.Add(sale);
                     }
                 }
 
-                return new List<Sale>();
+                return sales;
             }
         }
 

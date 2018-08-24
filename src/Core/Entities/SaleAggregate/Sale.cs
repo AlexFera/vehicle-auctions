@@ -21,5 +21,7 @@ namespace Core.Entities.SaleAggregate
         public int NumberOfLots { get; set; }
 
         public decimal BidIncrement { get; set; }
+
+        public int CountryId { get; set; }
     }
 }
