@@ -8,7 +8,7 @@ namespace Core.Interfaces
     {
         Task<IEnumerable<Sale>> ListActiveSalesAsync();
 
-        Task<int> GetLotCountAsync(int saleId);
+        Task<int> GetLotCountAsync(int saleId, string countryCode);
 
         Task<Sale> GetSaleAsync(int saleId);
     }

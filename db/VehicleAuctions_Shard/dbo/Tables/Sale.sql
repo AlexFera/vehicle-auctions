@@ -7,10 +7,9 @@
     [LocationId] INT          NOT NULL,
     [SaleTypeId] INT NOT NULL, 
     [BidIncrement] MONEY NOT NULL, 
-	[CountryId] INT NOT NULL,
     CONSTRAINT [PK_Sale] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Sale_Location] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[Location] ([Id]),
 	CONSTRAINT [FK_Sale_SaleType] FOREIGN KEY ([SaleTypeId]) REFERENCES [dbo].[SaleType] ([Id]),
-	CONSTRAINT [FK_Sale_Country] FOREIGN KEY ([CountryId]) REFERENCES [Country]([Id])
+	CONSTRAINT [FK_Sale_Seller] FOREIGN KEY ([SellerId]) REFERENCES [dbo].[Seller] ([Id])
 );
 

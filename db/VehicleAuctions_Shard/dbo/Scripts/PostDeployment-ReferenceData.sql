@@ -122,6 +122,178 @@ WHEN NOT MATCHED BY SOURCE
 		DELETE;
 
 
+IF DB_NAME() = 'VehicleAuctions_EUShard'
+BEGIN
+	MERGE INTO [dbo].[Seller] AS Target
+	USING (
+		VALUES (1,N'Dealer Auto București', 'vendor-romania@mailinator.com'),
+			(2,N'Spanish Auto Dealer', 'vendor-spain@mailinator.com'),
+			(3,N'Germany Auto Dealer', 'vendor-germany@mailinator.com')
+		) AS Source(Id, CompanyName, UserName)
+		ON Target.Id = Source.Id
+	WHEN MATCHED
+		THEN
+			UPDATE
+			SET CompanyName = Source.CompanyName
+				,UserName = Source.UserName
+	WHEN NOT MATCHED BY TARGET
+		THEN
+			INSERT (
+				Id
+				,CompanyName
+				,UserName
+				)
+			VALUES (
+				Id
+				,CompanyName
+				,UserName
+				)
+	WHEN NOT MATCHED BY SOURCE
+		THEN
+			DELETE;
+
+	MERGE INTO [dbo].[Sale] AS Target
+	USING (
+		VALUES (1,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 1, 1, 1, 100),
+			(2,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 2, 4, 1, 100),
+			(3,N'Behörden Auktion – Vor-Ort-Auktion', '2018-08-02 16:00:00.000', '2018-11-01 16:00:00.000', 3, 3, 1, 100)
+		) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId, BidIncrement)
+		ON Target.Id = Source.Id
+	WHEN MATCHED
+		THEN
+			UPDATE
+			SET Name = Source.Name
+				,StartDate = Source.StartDate
+				,EndDate = Source.EndDate
+				,SellerId = Source.SellerId
+				,LocationId = Source.LocationId
+				,SaleTypeId = Source.SaleTypeId
+				,BidIncrement = Source.BidIncrement
+	WHEN NOT MATCHED BY TARGET
+		THEN
+			INSERT (
+				Id
+				,Name
+				,StartDate
+				,EndDate
+				,SellerId
+				,LocationId
+				,SaleTypeId
+				,BidIncrement
+				)
+			VALUES (
+				Id
+				,Name
+				,StartDate
+				,EndDate
+				,SellerId
+				,LocationId
+				,SaleTypeId
+				,BidIncrement
+				)
+	WHEN NOT MATCHED BY SOURCE
+		THEN
+			DELETE;
+END
+
+
+IF DB_NAME() = 'VehicleAuctions_UKShard'
+BEGIN
+	MERGE INTO [dbo].[Seller] AS Target
+	USING (
+		VALUES (1,N'United Kingdom Auto Dealer', 'vendor-united-kingdom@mailinator.com')
+		) AS Source(Id, CompanyName, UserName)
+		ON Target.Id = Source.Id
+	WHEN MATCHED
+		THEN
+			UPDATE
+			SET CompanyName = Source.CompanyName
+				,UserName = Source.UserName
+	WHEN NOT MATCHED BY TARGET
+		THEN
+			INSERT (
+				Id
+				,CompanyName
+				,UserName
+				)
+			VALUES (
+				Id
+				,CompanyName
+				,UserName
+				)
+	WHEN NOT MATCHED BY SOURCE
+		THEN
+			DELETE;
+
+	MERGE INTO [dbo].[Sale] AS Target
+	USING (
+		VALUES (1,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 1, 5, 2, 100),
+			(2,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 1, 2, 1, 100)
+		) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId, BidIncrement)
+		ON Target.Id = Source.Id
+	WHEN MATCHED
+		THEN
+			UPDATE
+			SET Name = Source.Name
+				,StartDate = Source.StartDate
+				,EndDate = Source.EndDate
+				,SellerId = Source.SellerId
+				,LocationId = Source.LocationId
+				,SaleTypeId = Source.SaleTypeId
+				,BidIncrement = Source.BidIncrement
+	WHEN NOT MATCHED BY TARGET
+		THEN
+			INSERT (
+				Id
+				,Name
+				,StartDate
+				,EndDate
+				,SellerId
+				,LocationId
+				,SaleTypeId
+				,BidIncrement
+				)
+			VALUES (
+				Id
+				,Name
+				,StartDate
+				,EndDate
+				,SellerId
+				,LocationId
+				,SaleTypeId
+				,BidIncrement
+				)
+	WHEN NOT MATCHED BY SOURCE
+		THEN
+			DELETE;
+END
+
+MERGE INTO [dbo].[Buyer] AS Target
+USING (
+	VALUES (1, 'alex@mailinator.com'),
+		(2, 'gabriela@mailinator.com'),
+		(3, 'tom@mailinator.com'),
+		(4, 'andreea@mailinator.com')
+	) AS Source(Id, UserName)
+	ON Target.Id = Source.Id
+WHEN MATCHED
+	THEN
+		UPDATE
+		SET UserName = Source.UserName
+WHEN NOT MATCHED BY TARGET
+	THEN
+		INSERT (
+			Id
+			,UserName
+			)
+		VALUES (
+			Id
+			,UserName
+			)
+WHEN NOT MATCHED BY SOURCE
+	THEN
+		DELETE;
+
 /* User Server property to insert data on the appropiate shards
 MERGE INTO [dbo].[Seller] AS Target
 USING (
@@ -152,76 +324,8 @@ WHEN NOT MATCHED BY SOURCE
 	THEN
 		DELETE;
 
-MERGE INTO [dbo].[Buyer] AS Target
-USING (
-	VALUES (1, 'alex@mailinator.com'),
-		(2, 'gabriela@mailinator.com'),
-		(3, 'tom@mailinator.com'),
-		(4, 'andreea@mailinator.com')
-	) AS Source(Id, UserName)
-	ON Target.Id = Source.Id
-WHEN MATCHED
-	THEN
-		UPDATE
-		SET UserName = Source.UserName
-WHEN NOT MATCHED BY TARGET
-	THEN
-		INSERT (
-			Id
-			,UserName
-			)
-		VALUES (
-			Id
-			,UserName
-			)
-WHEN NOT MATCHED BY SOURCE
-	THEN
-		DELETE;
 
-MERGE INTO [dbo].[Sale] AS Target
-USING (
-	VALUES (1,N'Vânzare de mașini second-hand', '2018-08-14 21:00:00.000', '2018-10-14 21:00:00.000', 1, 1, 1, 100),
-		(2,N'Alphabet - Used cars', '2018-08-10 09:00:00.000', '2018-10-25 09:00:00.000', 3, 5, 2, 100),
-		(3,N'Openshop - Young cars', '2018-07-02 21:00:00.000', '2018-10-30 21:00:00.000', 3, 2, 1, 100),
-		(4,N'Alta Rotación- Renueva tu Stock', '2018-08-20 11:00:00.000', '2018-10-20 11:00:00.000', 2, 4, 1, 100),
-		(5,N'Behörden Auktion – Vor-Ort-Auktion', '2018-08-02 16:00:00.000', '2018-11-01 16:00:00.000', 4, 3, 1, 100)
-	) AS Source(Id, Name, StartDate, EndDate, SellerId, LocationId, SaleTypeId, BidIncrement)
-	ON Target.Id = Source.Id
-WHEN MATCHED
-	THEN
-		UPDATE
-		SET Name = Source.Name
-			,StartDate = Source.StartDate
-			,EndDate = Source.EndDate
-			,SellerId = Source.SellerId
-			,LocationId = Source.LocationId
-			,SaleTypeId = Source.SaleTypeId
-			,BidIncrement = Source.BidIncrement
-WHEN NOT MATCHED BY TARGET
-	THEN
-		INSERT (
-			Id
-			,Name
-			,StartDate
-			,EndDate
-			,SellerId
-			,LocationId
-			,SaleTypeId
-			,BidIncrement
-			)
-		VALUES (
-			Id
-			,Name
-			,StartDate
-			,EndDate
-			,SellerId
-			,LocationId
-			,SaleTypeId
-			,BidIncrement
-			)
-WHEN NOT MATCHED BY SOURCE
-	THEN
-		DELETE;
+
 
 MERGE INTO [dbo].[Lot] AS Target
 USING (

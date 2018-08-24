@@ -10,6 +10,8 @@ namespace Interfaces
 
         void CreateShard(ListShardMap<int> shardMap, string databaseShardName, int shardingKey);
 
-        string GetConnectionStringForMultiShardConnection();
+        string GetConnectionString();
+
+        int GetShardKeyByCountryCode(string countryCode);
     }
 }

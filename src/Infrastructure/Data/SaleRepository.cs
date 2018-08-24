@@ -32,7 +32,7 @@ namespace Infrastructure.Data
             var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
             var shards = shardMap.GetShards();
 
-            using (var multiShardConnection = new MultiShardConnection(shards, this.elasticScaleClient.GetConnectionStringForMultiShardConnection()))
+            using (var multiShardConnection = new MultiShardConnection(shards, this.elasticScaleClient.GetConnectionString()))
             using (var multiShardCommand = multiShardConnection.CreateCommand())
             {
                 multiShardCommand.CommandText = @"
@@ -43,7 +43,6 @@ namespace Infrastructure.Data
 	                    ,s.StartDate
 	                    ,s.EndDate
 	                    ,s.BidIncrement
-                        ,s.CountryId
 	                    ,st.Value AS SaleType
 	                    -- Seller
 	                    ,sl.CompanyName
@@ -81,7 +80,6 @@ namespace Infrastructure.Data
                         sale.StartDate = reader.GetDateTime(columnIndex++);
                         sale.EndDate = reader.GetDateTime(columnIndex++);
                         sale.BidIncrement = reader.GetDecimal(columnIndex++);
-                        sale.CountryId = reader.GetInt32(columnIndex++);
                         sale.SaleType = (SaleType)Enum.Parse(typeof(SaleType), reader.GetString(columnIndex++));
                         sale.Seller.CompanyName = reader.GetString(columnIndex++);
                         sale.Location.StreetAddress = reader.GetString(columnIndex++);
@@ -95,16 +93,21 @@ namespace Infrastructure.Data
                     }
                 }
 
+                foreach (var sale in sales)
+                {
+                    sale.NumberOfLots = await GetLotCountAsync(sale.Id, sale.Location.Country.Code);
+                }
+
                 return sales;
             }
         }
 
-        public async Task<int> GetLotCountAsync(int saleId)
+        public async Task<int> GetLotCountAsync(int saleId, string countryCode)
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
-            {
-                sqlConnection.Open();
+            var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
 
+            using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
+            {
                 var p = new DynamicParameters();
                 p.Add("saleId", saleId);
 
@@ -134,7 +137,7 @@ namespace Infrastructure.Data
 
                 foreach (var sale in sales)
                 {
-                    sale.NumberOfLots = await GetLotCountAsync(sale.Id);
+                    sale.NumberOfLots = await GetLotCountAsync(sale.Id, sale.Location.Country.Code);
                 }
 
                 return sales.FirstOrDefault();

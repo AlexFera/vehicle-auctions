@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.SqlDatabase.ElasticScale.ShardManagement;
 using Microsoft.Azure.SqlDatabase.ElasticScale.ShardManagement.Schema;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -73,7 +74,7 @@ namespace Infrastructure.ElasticScale
         /// Returns a connection string to use for Data-Dependent Routing and Multi-Shard Query,
         /// which does not contain DataSource or InitialCatalog.
         /// </summary>
-        public string GetConnectionStringForMultiShardConnection()
+        public string GetConnectionString()
         {
             var connectionString = new SqlConnectionStringBuilder
             {
@@ -85,6 +86,21 @@ namespace Infrastructure.ElasticScale
             };
 
             return connectionString.ToString();
+        }
+
+        public int GetShardKeyByCountryCode(string countryCode)
+        {
+            var shardKey = 0;
+            if (countryCode.Equals("uk", StringComparison.OrdinalIgnoreCase))
+            {
+                shardKey = 2;
+            }
+            else
+            {
+                shardKey = 1;
+            }
+
+            return shardKey;
         }
 
         private Shard CreateOrGetShard(ListShardMap<int> shardMap, string databaseShardName)
