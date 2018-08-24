@@ -1,11 +1,15 @@
 ﻿using Microsoft.Azure.SqlDatabase.ElasticScale.ShardManagement;
 
-namespace Web
+namespace Interfaces
 {
     public interface IElasticScaleClient
     {
         ListShardMap<int> CreateOrGetListShardMap();
+
         void CreateSchemaInfo(string shardMapName);
+
         void CreateShard(ListShardMap<int> shardMap, string databaseShardName, int shardingKey);
+
+        string GetConnectionStringForMultiShardConnection();
     }
 }

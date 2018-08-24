@@ -1,31 +1,37 @@
-﻿using Microsoft.Azure.SqlDatabase.ElasticScale.ShardManagement;
+﻿using Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.SqlDatabase.ElasticScale.ShardManagement;
 using Microsoft.Azure.SqlDatabase.ElasticScale.ShardManagement.Schema;
 using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 
-namespace Web
+namespace Infrastructure.ElasticScale
 {
     public class ElasticScaleClient : IElasticScaleClient
     {
         private readonly ShardMapManager shardMapManager;
         private readonly IConfiguration configuration;
+        private readonly IHostingEnvironment env;
+        private const string ShardMapName = "CountryShardMap";
 
         public ElasticScaleClient(
             ShardMapManager shardMapManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IHostingEnvironment env)
         {
             this.shardMapManager = shardMapManager;
             this.configuration = configuration;
+            this.env = env;
         }
 
         public ListShardMap<int> CreateOrGetListShardMap()
         {
-            var shardMapName = "CountryShardMap";
-            var shardMapExists = this.shardMapManager.TryGetListShardMap(shardMapName, out ListShardMap<int> shardMap);
+            var shardMapExists = this.shardMapManager.TryGetListShardMap(ShardMapName, out ListShardMap<int> shardMap);
 
             if (!shardMapExists)
             {
-                shardMap = this.shardMapManager.CreateListShardMap<int>(shardMapName);
+                shardMap = this.shardMapManager.CreateListShardMap<int>(ShardMapName);
             }
 
             return shardMap;
@@ -61,6 +67,24 @@ namespace Web
             }
 
             this.shardMapManager.GetSchemaInfoCollection().Add(shardMapName, schemaInfo);
+        }
+
+        /// <summary>
+        /// Returns a connection string to use for Data-Dependent Routing and Multi-Shard Query,
+        /// which does not contain DataSource or InitialCatalog.
+        /// </summary>
+        public string GetConnectionStringForMultiShardConnection()
+        {
+            var connectionString = new SqlConnectionStringBuilder
+            {
+                UserID = this.configuration["ShardingUserName"],
+                Password = this.configuration["ShardingPassword"],
+                IntegratedSecurity = env.IsDevelopment(),
+                ApplicationName = "VehicleAuctionsWebApp",
+                ConnectTimeout = 30
+            };
+
+            return connectionString.ToString();
         }
 
         private Shard CreateOrGetShard(ListShardMap<int> shardMap, string databaseShardName)

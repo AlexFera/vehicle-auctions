@@ -2,6 +2,8 @@
 using Core.Entities.SaleAggregate;
 using Core.Interfaces;
 using Dapper;
+using Interfaces;
+using Microsoft.Azure.SqlDatabase.ElasticScale.Query;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
@@ -14,34 +16,73 @@ namespace Infrastructure.Data
     public class SaleRepository : ISaleRepository
     {
         private readonly IConfiguration configuration;
+        private readonly IElasticScaleClient elasticScaleClient;
 
-        public SaleRepository(IConfiguration configuration)
+        public SaleRepository(
+            IConfiguration configuration,
+            IElasticScaleClient elasticScaleClient)
         {
             this.configuration = configuration;
+            this.elasticScaleClient = elasticScaleClient;
         }
 
         public async Task<IEnumerable<Sale>> ListActiveSalesAsync()
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
+            var shards = shardMap.GetShards();
+
+            using (var multiShardConnection = new MultiShardConnection(shards, this.elasticScaleClient.GetConnectionStringForMultiShardConnection()))
+            using (var multiShardCommand = multiShardConnection.CreateCommand())
             {
-                sqlConnection.Open();
+                multiShardCommand.CommandText = @"
+                    SELECT
+	                    -- Sale
+	                    s.Id
+	                    ,s.Name
+	                    ,s.StartDate
+	                    ,s.EndDate
+	                    ,s.BidIncrement
+	                    ,st.Value AS SaleType
+	                    -- Seller
+	                    ,sl.Id
+	                    ,sl.CompanyName
+	                    -- Location
+	                    ,l.Id
+	                    ,l.StreetAddress
+	                    ,l.PostalCode
+	                    ,l.City
+	                    ,l.StateOrProvince
+	                    -- Country
+	                    ,c.Id
+	                    ,c.Code
+	                    ,c.Name
+                    FROM [dbo].[Sale] s WITH (NOLOCK)
+                    INNER JOIN [dbo].[SaleType] st WITH (NOLOCK) ON s.SaleTypeId = st.Id
+                    INNER JOIN [dbo].[Seller] sl WITH (NOLOCK) ON s.SellerId = sl.Id
+                    INNER JOIN [dbo].[Location] l WITH (NOLOCK) ON s.LocationId = l.Id
+                    INNER JOIN [dbo].[Country] c WITH (NOLOCK) ON l.CountryId = c.Id";
 
-                var sales = await sqlConnection.QueryAsync<Sale, Seller, Location, Country, Sale>("Sale_List",
-                    map: (sale, seller, location, country) =>
-                    {
-                        sale.Seller = seller;
-                        sale.Location = location;
-                        sale.Location.Country = country;
-                        return sale;
-                    },
-                    commandType: CommandType.StoredProcedure);
+                // Allow for partial results in case some shards do not respond in time
+                multiShardCommand.ExecutionPolicy = MultiShardExecutionPolicy.PartialResults;
 
-                foreach (var sale in sales)
+                multiShardCommand.CommandTimeout = 30;
+
+                // Execute the command. 
+                // We do not need to specify retry logic because MultiShardDataReader will internally retry until the CommandTimeout expires.
+                using (var reader = await multiShardCommand.ExecuteReaderAsync())
                 {
-                    sale.NumberOfLots = await GetLotCountAsync(sale.Id);
+                    int rows = 0;
+                    while (await reader.ReadAsync())
+                    {
+                        // Read the values using standard DbDataReader methods
+                        object[] values = new object[reader.FieldCount];
+                        reader.GetValues(values);
+
+                        rows++;
+                    }
                 }
 
-                return sales;
+                return new List<Sale>();
             }
         }
 

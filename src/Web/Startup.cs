@@ -1,7 +1,9 @@
 ﻿using Core.Interfaces;
 using Core.Services;
 using Infrastructure.Data;
+using Infrastructure.ElasticScale;
 using Infrastructure.Identity;
+using Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
