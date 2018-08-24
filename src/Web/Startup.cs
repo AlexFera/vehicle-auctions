@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Azure.SqlDatabase.ElasticScale.ShardManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +56,8 @@ namespace Web
             services.AddScoped<ILotRepository, LotRepository>();
             services.AddScoped<IBidRepository, BidRepository>();
             services.AddScoped<IAuctionService, AuctionService>();
+            services.AddSingleton(CreateOrGetShardMapManager(Configuration));
+            services.AddScoped<IElasticScaleClient, ElasticScaleClient>();
 
             var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()
@@ -106,6 +109,19 @@ namespace Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static ShardMapManager CreateOrGetShardMapManager(IConfiguration configuration)
+        {
+            var shardMapManagerConnection = configuration.GetConnectionString("ShardMapManagerConnection");
+            var shardMapManagerExists = ShardMapManagerFactory.TryGetSqlShardMapManager(shardMapManagerConnection, ShardMapManagerLoadPolicy.Lazy, out ShardMapManager shardMapManager);
+
+            if (!shardMapManagerExists)
+            {
+                shardMapManager = ShardMapManagerFactory.CreateSqlShardMapManager(shardMapManagerConnection);
+            }
+
+            return shardMapManager;
         }
     }
 }
