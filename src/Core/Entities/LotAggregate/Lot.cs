@@ -24,5 +24,7 @@ namespace Core.Entities.LotAggregate
         public decimal CurrentPrice { get; set; }
 
         public decimal NextBidAmount { get; set; }
+
+        public string CountryCode { get; set; }
     }
 }

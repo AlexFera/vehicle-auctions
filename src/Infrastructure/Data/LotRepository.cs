@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -87,10 +86,14 @@ namespace Infrastructure.Data
 	                    ,v.HasSecondKeyAvailable
 	                    ,v.TransmissionType
 	                    ,v.EnginePower
+                        ,c.Code
                     FROM [dbo].[Lot] l
                     INNER JOIN [dbo].[LotStatus] ls ON l.LotStatusId = ls.Id
                     INNER JOIN [dbo].[LotItem] li ON l.Id = li.LotId
-                    INNER JOIN [dbo].[Vehicle] v ON li.Id = v.LotItemId";
+                    INNER JOIN [dbo].[Vehicle] v ON li.Id = v.LotItemId
+                    INNER JOIN [dbo].[Sale] s ON l.SaleId = s.Id
+					INNER JOIN [dbo].[Location] lo ON s.LocationId = lo.Id
+                    INNER JOIN [dbo].[Country] c ON lo.CountryId = c.Id";
 
                 // Allow for partial results in case some shards do not respond in time
                 multiShardCommand.ExecutionPolicy = MultiShardExecutionPolicy.PartialResults;
@@ -135,6 +138,7 @@ namespace Infrastructure.Data
                         lot.Vehicle.HasSecondKeyAvailable = reader.GetBoolean(columnIndex++);
                         lot.Vehicle.TransmissionType = reader.GetString(columnIndex++);
                         lot.Vehicle.EnginePower = reader.GetString(columnIndex++);
+                        lot.CountryCode = reader.GetString(columnIndex++);
 
                         lots.Add(lot);
                     }

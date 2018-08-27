@@ -29,7 +29,7 @@ namespace Web.Controllers
         public async Task<IActionResult> List(int? saleId, string countryCode)
         {
             var lots = await this.auctionService.ListLotsAsync(saleId, countryCode);
-            var viewModel = new LotSearchViewModel { Lots = lots, CountryCode = countryCode };
+            var viewModel = new LotSearchViewModel { Lots = lots };
 
             return View(viewModel);
         }

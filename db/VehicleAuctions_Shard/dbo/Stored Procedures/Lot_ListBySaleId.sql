@@ -3,6 +3,7 @@ AS
 SELECT TOP (1000) l.Id
 	,l.StartPrice
 	,l.ReservePrice
+	,c.Code AS CountryCode
 	,l.SaleId
 	,ls.Value AS LotStatus
 	,v.Id
@@ -34,5 +35,8 @@ FROM [dbo].[Lot] l
 INNER JOIN [dbo].[LotStatus] ls ON l.LotStatusId = ls.Id
 INNER JOIN [dbo].[LotItem] li ON l.Id = li.LotId
 INNER JOIN [dbo].[Vehicle] v ON li.Id = v.LotItemId
+INNER JOIN [dbo].[Sale] s ON l.SaleId = s.Id
+INNER JOIN [dbo].[Location] lo ON s.LocationId = lo.Id
+INNER JOIN [dbo].[Country] c ON lo.CountryId = c.Id
 WHERE l.SaleId = @saleId
 

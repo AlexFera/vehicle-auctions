@@ -38,12 +38,12 @@
                 <div class="col-md-12" align="center">
                     <div class="row">
                         <div class="col-md-3">
-                            <a asp-action="Details" asp-controller="Lot" asp-route-lotId="@lot.Id" asp-route-saleId="@lot.SaleId" asp-route-countryCode="@Model.CountryCode">
+                            <a asp-action="Details" asp-controller="Lot" asp-route-lotId="@lot.Id" asp-route-saleId="@lot.SaleId" asp-route-countryCode="@lot.CountryCode">
                                 <img src="@lot.Vehicle.ImageUrl/100" class="img-thumbnail img-fluid">
                             </a>
                         </div>
                         <div class="col-md-3">
-                            <a asp-action="Details" asp-controller="Lot" asp-route-lotId="@lot.Id" asp-route-saleId="@lot.SaleId" asp-route-countryCode="@Model.CountryCode">
+                            <a asp-action="Details" asp-controller="Lot" asp-route-lotId="@lot.Id" asp-route-saleId="@lot.SaleId" asp-route-countryCode="@lot.CountryCode">
                                 <h3 class="text-info">@lot.Vehicle.Make @lot.Vehicle.Model @lot.Vehicle.EngineCapacity @lot.Vehicle.EngineType - @lot.Vehicle.FirstRegistrationDate.Year</h3>
                             </a>
 
