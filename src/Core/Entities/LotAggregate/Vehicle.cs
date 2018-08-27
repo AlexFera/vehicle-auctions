@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Core.Entities.LotAggregate
 {
@@ -19,11 +18,11 @@ namespace Core.Entities.LotAggregate
 
         public DateTime FirstRegistrationDate { get; set; }
 
-        public decimal EngineCapacity { get; set; }
+        public double EngineCapacity { get; set; }
 
         public string EngineType { get; set; }
 
-        public int NumberOfDoors { get; set; }
+        public short NumberOfDoors { get; set; }
 
         public string FuelType { get; set; }
 
@@ -41,7 +40,7 @@ namespace Core.Entities.LotAggregate
 
         public bool HasServiceHistory { get; set; }
 
-        public int EuroEmissionStandard { get; set; }
+        public short EuroEmissionStandard { get; set; }
 
         public bool HasAccidentDamage { get; set; }
 
