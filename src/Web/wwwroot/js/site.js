@@ -4,7 +4,8 @@
         const bidAmount = $('#Lot_NextBidAmount').val();
         const lotId = $('#Lot_Id').val();
         const saleId = $('#Lot_Sale_Id').val();
-        const bid = { amount: bidAmount, lotId: lotId, saleId: saleId };
+        const countryCode = $('#CountryCode').val();
+        const bid = { amount: bidAmount, lotId: lotId, saleId: saleId, countryCode: countryCode };
 
         $.ajax({
             type: "POST",

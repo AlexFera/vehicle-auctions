@@ -29,7 +29,7 @@ namespace Web.Controllers
         public async Task<IActionResult> List(int? saleId, string countryCode)
         {
             var lots = await this.auctionService.ListLotsAsync(saleId, countryCode);
-            var viewModel = new LotSearchViewModel { Lots = lots };
+            var viewModel = new LotSearchViewModel { Lots = lots, CountryCode = countryCode };
 
             return View(viewModel);
         }
@@ -37,7 +37,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Details(int lotId, int saleId, string countryCode)
         {
             var lot = await this.auctionService.GetLotAsync(lotId, saleId, countryCode);
-            var viewModel = new LotDetailsViewModel { Lot = lot };
+            var viewModel = new LotDetailsViewModel { Lot = lot, CountryCode = countryCode };
 
             return View(viewModel);
         }
@@ -49,7 +49,7 @@ namespace Web.Controllers
             await this.auctionService.PlaceBidAsync(bid.LotId, bid.Amount, user.UserName, bid.SaleId, bid.CountryCode);
             var lot = await this.auctionService.GetLotAsync(bid.LotId, bid.SaleId, bid.CountryCode);
 
-            await this.biddingHubContext.Clients.All.SendAsync("ReceiveMessage", user.UserName, new { lot.CurrentPrice, lot.NextBidAmount, lot.Id });
+            await this.biddingHubContext.Clients.All.SendAsync("ReceiveMessage", user.UserName, new { lot.CurrentPrice, lot.NextBidAmount, lot.Id, bid.CountryCode });
 
             return new EmptyResult();
         }

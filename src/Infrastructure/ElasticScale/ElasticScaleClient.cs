@@ -91,7 +91,7 @@ namespace Infrastructure.ElasticScale
         public int GetShardKeyByCountryCode(string countryCode)
         {
             var shardKey = 0;
-            if (countryCode.Equals("uk", StringComparison.OrdinalIgnoreCase))
+            if (countryCode.Equals("gb", StringComparison.OrdinalIgnoreCase))
             {
                 shardKey = 2;
             }

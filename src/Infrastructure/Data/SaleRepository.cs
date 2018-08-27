@@ -118,8 +118,6 @@ namespace Infrastructure.Data
             var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
             using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
             {
-                sqlConnection.Open();
-
                 var p = new DynamicParameters();
                 p.Add("saleId", saleId);
 
