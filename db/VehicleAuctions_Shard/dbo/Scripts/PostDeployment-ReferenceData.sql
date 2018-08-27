@@ -440,6 +440,181 @@ BEGIN
 	WHEN NOT MATCHED BY SOURCE
 		THEN
 			DELETE;
+
+	MERGE INTO [dbo].[Lot] AS Target
+	USING (
+		VALUES (1,5000, 12500, 1, 1),
+			(2,6000, 11500, 1, 1),
+			(3,6000, 13000, 1, 1),
+			(4,4900, 10300, 1, 1),
+			(5,7000, 14000, 1, 2),
+			(6,9000, 18500, 1, 2),
+			(7,8200, 17300, 1, 2),
+			(8,6900, 12100, 1, 2),
+			(9,9000, 19900, 1, 2),
+			(10,8000, 16900, 1, 2)
+		) AS Source(Id, StartPrice, ReservePrice, LotStatusId, SaleId)
+		ON Target.Id = Source.Id
+	WHEN MATCHED
+		THEN
+			UPDATE
+			SET StartPrice = Source.StartPrice
+				,ReservePrice = Source.ReservePrice
+				,LotStatusId = Source.LotStatusId
+				,SaleId = Source.SaleId
+	WHEN NOT MATCHED BY TARGET
+		THEN
+			INSERT (
+				Id
+				,StartPrice
+				,ReservePrice
+				,LotStatusId
+				,SaleId
+				)
+			VALUES (
+				Id
+				,StartPrice
+				,ReservePrice
+				,LotStatusId
+				,SaleId
+				)
+	WHEN NOT MATCHED BY SOURCE
+		THEN
+			DELETE;
+
+	MERGE INTO [dbo].[LotItem] AS Target
+	USING (
+		VALUES (1,1),
+			(2,2),
+			(3,3),
+			(4,4),
+			(5,5),
+			(6,6),
+			(7,7),
+			(8,8),
+			(9,9),
+			(10,10)
+		) AS Source(Id, LotId)
+		ON Target.Id = Source.Id
+	WHEN MATCHED
+		THEN
+			UPDATE
+			SET LotId = Source.LotId
+	WHEN NOT MATCHED BY TARGET
+		THEN
+			INSERT (
+				Id
+				,LotId
+				)
+			VALUES (
+				Id
+				,LotId
+				)
+	WHEN NOT MATCHED BY SOURCE
+		THEN
+			DELETE;
+
+	MERGE INTO [dbo].[Vehicle] AS Target
+	USING (
+		VALUES (1,N'SKODA',N'BSuperb',N'TMBJJ73T9F9023569',N'Silver Metallic',179794,1,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/TMBJJ73T9F9023569/154918244',N'2015-06-01',1.4,N'TDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(2,N'Citroen',N'C3',N'VF7SXHMZ6GT550383',N'Grey Metallic',73548,2,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/VF7SXHMZ6GT550383/154588563',N'2015-06-01',1.5,N'CDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(3,N'Peugeot',N'208',N'VF3CC8HP0CT117380',N'Black Metallic',167000,3,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/VF3CC8HP0CT117380/154979206',N'2015-06-01',1.4,N'E-HDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(4,N'Renault',N'Clio',N'VF17RJL0H52913026',N'Grey Metallic',86382,4,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/VF17RJL0H52913026/154480782',N'2015-06-01',2.0,N'TDCI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(5,N'Nissan',N'Qashqai',N'SJNFAAJ11U1160650',N'Black Metallic',145419,5,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/SJNFAAJ11U1160650/155030826',N'2015-06-01',2.0,N'EFFICIENTDYNAMICS',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(6,N'Opel',N'Astra',N'W0LBD8EA5G8094982',N'Silver Metallic',75736,6,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/W0LBD8EA5G8094982/155045690',N'2015-06-01',2.0,N'XDRIVE40DA',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(7,N'Peugeot',N'3008',N'VF3HURHC8DS180204',N'Gold Metallic',165633,7,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/VF3HURHC8DS180204/155017855',N'2015-06-01',2.0,N'XDRIVE40DA',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(8,N'Mitsubishi',N'Outlander',N'JMBXDGG2WEZ014775',N'Grey Metallic',109165,8,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/JMBXDGG2WEZ014775/155111857',N'2015-06-01',2.0,N'TDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(9,N'Renault',N'Kadjar',N'VF1RFE00453506518',N'Red',182761,9,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/VF1RFE00453506518/155061621',N'2015-06-01',1.5,N'DCI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP'),
+			(10,N'Volkswagen',N'Touareg',N'SAJAA05K1FDU75879',N'Black Metallic',208877,10,N'https://bcamediaprod.blob.core.windows.net/public/images/vehicle/NL/WVGZZZ7PZED047438/155019231',N'2015-06-01',3.0,N'TDI',5,N'Diesel', N'Seat Covering - Cloth|Trim Type (Generic) - Cloth|Climate Control|Electrically Adjustable Seats|Cabin Trim Inlay - Aluminium',N'Remote Adjusting Wing Mirrors|Heated Wing Mirrors|Alloy Wheels|Xenon Headlamps',N'Satellite Navigation - Garmin MAP PILOT|Radio|Bluetooth Telephone Interface',N'Air Bags|Cruise Control|Powered Windows - Front and Rear',N'Lease',N'Romania',1,6,0,1,N'Manual',N'97 KW / 130 HP')
+		) AS Source(Id,Make,Model,VIN,Color,Mileage,LotItemId,ImageUrl,FirstRegistrationDate,EngineCapacity,EngineType,NumberOfDoors,FuelType,EquipmentInterior,EquipmentExterior,EquipmentInfotainment,EquipmentEngineTechnology,VehicleSource,CurrentCountryOfRegistration,HasServiceHistory,EuroEmissionStandard,HasAccidentDamage,HasSecondKeyAvailable,TransmissionType, EnginePower)
+		ON Target.Id = Source.Id
+	WHEN MATCHED
+		THEN
+			UPDATE
+			SET Make = Source.Make
+				,Model = Source.Model
+				,VIN = Source.VIN
+				,Color = Source.Color
+				,Mileage = Source.Mileage
+				,LotItemId = Source.LotItemId
+				,ImageUrl = Source.ImageUrl
+				,FirstRegistrationDate = Source.FirstRegistrationDate
+				,EngineCapacity = Source.EngineCapacity
+				,EngineType = Source.EngineType
+				,NumberOfDoors = Source.NumberOfDoors
+				,FuelType = Source.FuelType
+				,EquipmentInterior = Source.EquipmentInterior
+				,EquipmentExterior = Source.EquipmentExterior
+				,EquipmentInfotainment = Source.EquipmentInfotainment
+				,EquipmentEngineTechnology = Source.EquipmentEngineTechnology
+				,VehicleSource = Source.VehicleSource
+				,CurrentCountryOfRegistration = Source.CurrentCountryOfRegistration
+				,HasServiceHistory = Source.HasServiceHistory
+				,EuroEmissionStandard = Source.EuroEmissionStandard
+				,HasAccidentDamage = Source.HasAccidentDamage
+				,HasSecondKeyAvailable = Source.HasSecondKeyAvailable
+				,TransmissionType = Source.TransmissionType
+				,EnginePower = Source.EnginePower
+	WHEN NOT MATCHED BY TARGET
+		THEN
+			INSERT (
+				Id
+				,Make
+				,Model
+				,VIN
+				,Color
+				,Mileage
+				,LotItemId
+				,ImageUrl
+				,FirstRegistrationDate
+				,EngineCapacity
+				,EngineType
+				,NumberOfDoors
+				,FuelType
+				,EquipmentInterior
+				,EquipmentExterior
+				,EquipmentInfotainment
+				,EquipmentEngineTechnology
+				,VehicleSource
+				,CurrentCountryOfRegistration
+				,HasServiceHistory
+				,EuroEmissionStandard
+				,HasAccidentDamage
+				,HasSecondKeyAvailable
+				,TransmissionType
+				,EnginePower
+				)
+			VALUES (
+				Id
+				,Make
+				,Model
+				,VIN
+				,Color
+				,Mileage
+				,LotItemId
+				,ImageUrl
+				,FirstRegistrationDate
+				,EngineCapacity
+				,EngineType
+				,NumberOfDoors
+				,FuelType
+				,EquipmentInterior
+				,EquipmentExterior
+				,EquipmentInfotainment
+				,EquipmentEngineTechnology
+				,VehicleSource
+				,CurrentCountryOfRegistration
+				,HasServiceHistory
+				,EuroEmissionStandard
+				,HasAccidentDamage
+				,HasSecondKeyAvailable
+				,TransmissionType
+				,EnginePower
+				)
+	WHEN NOT MATCHED BY SOURCE
+		THEN
+			DELETE;
+	
 END
 
 MERGE INTO [dbo].[Buyer] AS Target
