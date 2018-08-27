@@ -1,29 +1,32 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
-using Core.Entities.LotAggregate;
+﻿using Core.Entities.LotAggregate;
 using Core.Interfaces;
 using Dapper;
+using Interfaces;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
     public class BidRepository : IBidRepository
     {
         private readonly IConfiguration configuration;
+        private readonly IElasticScaleClient elasticScaleClient;
 
-        public BidRepository(IConfiguration configuration)
+        public BidRepository(
+            IConfiguration configuration,
+            IElasticScaleClient elasticScaleClient)
         {
             this.configuration = configuration;
+            this.elasticScaleClient = elasticScaleClient;
         }
 
-        public async Task<IEnumerable<Bid>> ListBidsAsync(int lotId)
+        public async Task<IEnumerable<Bid>> ListBidsAsync(int lotId, string countryCode)
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
+            using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
             {
-                sqlConnection.Open();
-
                 var p = new DynamicParameters();
                 p.Add("@lotId", lotId);
 
@@ -40,12 +43,11 @@ namespace Infrastructure.Data
             }
         }
 
-        public async Task InsertBidAsync(int lotId, decimal amount, string userName)
+        public async Task InsertBidAsync(int lotId, decimal amount, string userName, string countryCode)
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
+            using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
             {
-                sqlConnection.Open();
-
                 var p = new DynamicParameters();
                 p.Add("@lotId", lotId);
                 p.Add("@amount", amount);

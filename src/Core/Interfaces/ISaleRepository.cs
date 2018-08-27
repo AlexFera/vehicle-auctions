@@ -10,6 +10,6 @@ namespace Core.Interfaces
 
         Task<int> GetLotCountAsync(int saleId, string countryCode);
 
-        Task<Sale> GetSaleAsync(int saleId);
+        Task<Sale> GetSaleAsync(int saleId, string countryCode);
     }
 }

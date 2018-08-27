@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -105,7 +104,6 @@ namespace Infrastructure.Data
         public async Task<int> GetLotCountAsync(int saleId, string countryCode)
         {
             var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
-
             using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
             {
                 var p = new DynamicParameters();
@@ -115,9 +113,10 @@ namespace Infrastructure.Data
             }
         }
 
-        public async Task<Sale> GetSaleAsync(int saleId)
+        public async Task<Sale> GetSaleAsync(int saleId, string countryCode)
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
+            using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
             {
                 sqlConnection.Open();
 

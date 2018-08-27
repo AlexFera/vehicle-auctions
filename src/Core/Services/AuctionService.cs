@@ -24,11 +24,11 @@ namespace Core.Services
             this.bidRepository = bidRepository;
         }
 
-        public async Task<Lot> GetLotAsync(int lotId, int saleId)
+        public async Task<Lot> GetLotAsync(int lotId, int saleId, string countryCode)
         {
-            var lot = await this.lotRepository.GetLotAsync(lotId);
-            lot.Bids = await this.bidRepository.ListBidsAsync(lotId);
-            lot.Sale = await this.saleRepository.GetSaleAsync(saleId);
+            var lot = await this.lotRepository.GetLotAsync(lotId, countryCode);
+            lot.Bids = await this.bidRepository.ListBidsAsync(lotId, countryCode);
+            lot.Sale = await this.saleRepository.GetSaleAsync(saleId, countryCode);
             SetCurrentPrice(lot);
             lot.NextBidAmount = lot.CurrentPrice + lot.Sale.BidIncrement;
 
@@ -40,11 +40,11 @@ namespace Core.Services
             return await this.saleRepository.ListActiveSalesAsync();
         }
 
-        public async Task<IEnumerable<Lot>> ListLotsAsync(int? saleId)
+        public async Task<IEnumerable<Lot>> ListLotsAsync(int? saleId, string countryCode)
         {
             if (saleId.HasValue)
             {
-                return await this.lotRepository.ListLotsAsync(saleId.Value);
+                return await this.lotRepository.ListLotsAsync(saleId.Value, countryCode);
             }
             else
             {
@@ -53,13 +53,13 @@ namespace Core.Services
 
         }
 
-        public async Task PlaceBidAsync(int lotId, decimal amount, string userName, int saleId)
+        public async Task PlaceBidAsync(int lotId, decimal amount, string userName, int saleId, string countryCode)
         {
-            var lot = await this.GetLotAsync(lotId, saleId);
+            var lot = await this.GetLotAsync(lotId, saleId, countryCode);
 
             if (amount > lot.CurrentPrice)
             {
-                await this.bidRepository.InsertBidAsync(lotId, amount, userName);
+                await this.bidRepository.InsertBidAsync(lotId, amount, userName, countryCode);
             }
         }
 

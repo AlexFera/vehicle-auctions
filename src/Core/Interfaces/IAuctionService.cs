@@ -9,12 +9,12 @@ namespace Core.Interfaces
     {
         Task<IEnumerable<Sale>> ListActiveSalesAsync();
 
-        Task<IEnumerable<Lot>> ListLotsAsync(int? saleId);
+        Task<IEnumerable<Lot>> ListLotsAsync(int? saleId, string countryCode);
 
         Task<IEnumerable<Lot>> ListLotsAsync();
 
-        Task<Lot> GetLotAsync(int lotId, int saleId);
+        Task<Lot> GetLotAsync(int lotId, int saleId, string countryCode);
 
-        Task PlaceBidAsync(int lotId, decimal amount, string userName, int saleId);
+        Task PlaceBidAsync(int lotId, decimal amount, string userName, int saleId, string countryCode);
     }
 }

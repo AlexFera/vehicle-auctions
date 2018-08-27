@@ -15,5 +15,7 @@ namespace Core.Entities.LotAggregate
         public DateTime PlacedDate { get; set; }
 
         public Buyer Placer { get; set; }
+
+        public string CountryCode { get; set; }
     }
 }

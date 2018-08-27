@@ -26,17 +26,17 @@ namespace Web.Controllers
             this.biddingHubContext = biddingHubContext;
         }
 
-        public async Task<IActionResult> List(int? saleId)
+        public async Task<IActionResult> List(int? saleId, string countryCode)
         {
-            var lots = await this.auctionService.ListLotsAsync(saleId);
+            var lots = await this.auctionService.ListLotsAsync(saleId, countryCode);
             var viewModel = new LotSearchViewModel { Lots = lots };
 
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Details(int lotId, int saleId)
+        public async Task<IActionResult> Details(int lotId, int saleId, string countryCode)
         {
-            var lot = await this.auctionService.GetLotAsync(lotId, saleId);
+            var lot = await this.auctionService.GetLotAsync(lotId, saleId, countryCode);
             var viewModel = new LotDetailsViewModel { Lot = lot };
 
             return View(viewModel);
@@ -46,8 +46,8 @@ namespace Web.Controllers
         public async Task<EmptyResult> Bid([FromBody] Bid bid)
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-            await this.auctionService.PlaceBidAsync(bid.LotId, bid.Amount, user.UserName, bid.SaleId);
-            var lot = await this.auctionService.GetLotAsync(bid.LotId, bid.SaleId);
+            await this.auctionService.PlaceBidAsync(bid.LotId, bid.Amount, user.UserName, bid.SaleId, bid.CountryCode);
+            var lot = await this.auctionService.GetLotAsync(bid.LotId, bid.SaleId, bid.CountryCode);
 
             await this.biddingHubContext.Clients.All.SendAsync("ReceiveMessage", user.UserName, new { lot.CurrentPrice, lot.NextBidAmount, lot.Id });
 

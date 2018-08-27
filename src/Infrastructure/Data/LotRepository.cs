@@ -1,6 +1,7 @@
 ﻿using Core.Entities.LotAggregate;
 using Core.Interfaces;
 using Dapper;
+using Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
@@ -13,18 +14,21 @@ namespace Infrastructure.Data
     public class LotRepository : ILotRepository
     {
         private readonly IConfiguration configuration;
+        private readonly IElasticScaleClient elasticScaleClient;
 
-        public LotRepository(IConfiguration configuration)
+        public LotRepository(
+            IConfiguration configuration,
+            IElasticScaleClient elasticScaleClient)
         {
             this.configuration = configuration;
+            this.elasticScaleClient = elasticScaleClient;
         }
 
-        public async Task<IEnumerable<Lot>> ListLotsAsync(int saleId)
+        public async Task<IEnumerable<Lot>> ListLotsAsync(int saleId, string countryCode)
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
+            using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
             {
-                sqlConnection.Open();
-
                 var p = new DynamicParameters();
                 p.Add("@saleId", saleId);
 
@@ -46,8 +50,6 @@ namespace Infrastructure.Data
         {
             using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
             {
-                sqlConnection.Open();
-
                 var lots = await sqlConnection.QueryAsync<Lot, Vehicle, Lot>("Lot_List",
                     map: (lot, vehicle) =>
                     {
@@ -61,12 +63,11 @@ namespace Infrastructure.Data
             }
         }
 
-        public async Task<Lot> GetLotAsync(int lotId)
+        public async Task<Lot> GetLotAsync(int lotId, string countryCode)
         {
-            using (var sqlConnection = new SqlConnection(this.configuration.GetConnectionString("DatabaseConnection")))
+            var shardMap = this.elasticScaleClient.CreateOrGetListShardMap();
+            using (var sqlConnection = shardMap.OpenConnectionForKey(this.elasticScaleClient.GetShardKeyByCountryCode(countryCode), this.elasticScaleClient.GetConnectionString()))
             {
-                sqlConnection.Open();
-
                 var p = new DynamicParameters();
                 p.Add("@lotId", lotId);
 
