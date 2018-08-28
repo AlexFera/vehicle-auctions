@@ -29,7 +29,7 @@ SELECT TOP (1) l.Id
 	,v.HasSecondKeyAvailable
 	,v.TransmissionType
 	,v.EnginePower
-FROM [dbo].[Lot] l
+FROM [dbo].[Lot] l WITH (NOLOCK)
 INNER JOIN [dbo].[LotStatus] ls ON l.LotStatusId = ls.Id
 INNER JOIN [dbo].[LotItem] li ON l.Id = li.LotId
 INNER JOIN [dbo].[Vehicle] v ON li.Id = v.LotItemId

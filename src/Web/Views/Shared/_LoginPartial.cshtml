@@ -8,7 +8,7 @@
 {
     <form asp-controller="Account" asp-action="SignOut" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="form-inline mt-2 mt-md-0">
         <span class="navbar-text">
-            Hello, @UserManager.GetUserName(User)!
+            Hello, <span id="signedin-username">@UserManager.GetUserName(User)</span>!
         </span>
         <ul class="navbar-nav px-3">
             <li>

@@ -58,10 +58,24 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col">
+                        <div class="col-6">
                             <button id="place-bid-button" type="submit" class="btn btn-primary btn-lg">Bid</button>
                         </div>
                     </div>
+
+                    @{ var showBiddingStatusClassName = Model.Lot.ShowBiddingStatus ? string.Empty : "display:none;"; }
+                    <div id="bidding-status" style="@showBiddingStatusClassName" class="form-row">
+                        <div class="col-7">
+                            <label>Bidding status:</label>
+                        </div>
+                        @{ var winningClassName = Model.Lot.BiddingStatus == Core.Entities.LotAggregate.BiddingStatus.Winning ? string.Empty : "display:none;"; }
+                        @{ var losingClassName = Model.Lot.BiddingStatus == Core.Entities.LotAggregate.BiddingStatus.Winning ? "display:none;" : string.Empty; }
+                        <div class="col">
+                            <label id="winning-status" style="@winningClassName" class="text-success">Winning</label>
+                            <label id="losing-status" style="@losingClassName" class="text-danger">Losing</label>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="col-3">
                             <label>Location:</label>
